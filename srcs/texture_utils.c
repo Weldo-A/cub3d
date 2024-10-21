@@ -6,11 +6,52 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 03:51:08 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/21 04:20:10 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:49:21 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img)
+{
+	float		wratio;
+	float		hratio;
+	uint32_t	x;
+	uint32_t	y;
+	int			index;
+
+	if (tx->width == img->width && tx->height == img->height)
+		ft_memcpy(img->pixels, tx->pixels, tx->width * tx->height * 4);
+	else
+	{
+		wratio = (float)tx->width / img->width;
+		hratio = (float)tx->height / img->height;
+		y = 0;
+		while (y < img->height)
+		{
+			x = -1;
+			while (++x < img->width)
+			{
+				index = (int)(y * hratio) *tx->width + (int)(x * wratio);
+				((int *)img->pixels)[y * img->width + x] \
+					= ((int *)tx->pixels)[index];
+			}
+			y++;
+		}
+	}
+}
+
+void	pixel_to_texture(mlx_texture_t *tx, uint32_t x, uint32_t y, \
+	uint32_t color)
+{
+	uint8_t	*index;
+
+	index = &tx->pixels[(y * tx->width + x) * 4];
+	*(index++) = (uint8_t)(color >> 24);
+	*(index++) = (uint8_t)(color >> 16);
+	*(index++) = (uint8_t)(color >> 8);
+	*index = (uint8_t)(color & 0xFF);
+}
 
 mlx_texture_t	*new_texture(uint32_t width, uint32_t height)
 {
@@ -26,5 +67,5 @@ mlx_texture_t	*new_texture(uint32_t width, uint32_t height)
 	if (!texture->pixels)
 		exit(1);
 	ft_bzero(texture->pixels, sizeof(uint8_t) * 4 * width * height);
-	return(texture);
+	return (texture);
 }

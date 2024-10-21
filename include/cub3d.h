@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/21 05:45:48 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:32:02 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include <stdlib.h>
 #include <string.h> // TO BE DELETED
 
-# define WIDTH 540
-# define HEIGHT 360
+# define CAMERA_W 540
+# define CAMERA_H 360
 # define WINDOW_W 1080
 # define WINDOW_H 720
 # define MMAP_WIDTH 250
@@ -48,6 +48,13 @@ typedef enum error_code
 	MALLOC_ERR = 2
 } error_code_t;
 
+typedef struct	s_player_data
+{
+	float	x;
+	float	y;
+	float	angle;
+}	t_player_data;
+
 /**
  * Cub3d main data stucture
  *
@@ -65,6 +72,7 @@ typedef struct	s_cubdata
 	mlx_image_t		*main_img;
 	mlx_texture_t	*camera;
 	mlx_texture_t	*minimap;
+	t_player_data	*player;
 	char			*map;
 	int				square_size;
 	uint32_t		floor_color;
@@ -72,13 +80,6 @@ typedef struct	s_cubdata
 
 	int				debug; // TO BE DELETED
 }	t_cubdata;
-
-typedef struct	s_player_data
-{
-	uint32_t	x;
-	uint32_t	y;
-	;
-}	t_player_data;
 
 
 //TO BE DELETED
@@ -96,7 +97,7 @@ void	cubdata_mlx_init(t_cubdata *cubdata);
 /**
  * @brief Free cubdata memory and everything it contains
  *
- * WARNING: Everything related to mlx it contains will be inaccessible
+ * WARNING: Everything related to mlx will be inaccessible
  * and thus must be terminated / freed prior to calling this function
  * 
  * @param cubdata Cub3d main data structure
@@ -149,5 +150,23 @@ void	error_exit(error_code_t code);
  * @return mlx_texture_t* 
  */
 mlx_texture_t	*new_texture(uint32_t width, uint32_t height);
+
+/**
+ * @brief Puts a pixel to a texture
+ * 
+ * @param tx MLX texture to write to
+ * @param x Pixel's x coordinate
+ * @param y Pixel's y coordinate
+ * @param color Pixel color
+ */
+void	pixel_to_texture(mlx_texture_t *tx, uint32_t x, uint32_t y, uint32_t color);
+
+/**
+ * @brief Puts and scales camera texture to game main image
+ * 
+ * @param tx Texture containing player's rendered environment
+ * @param img Image of the game frame
+ */
+void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: abernade <abernade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/10/21 06:01:26 by abernade         ###   ########.fr        #
+#    Updated: 2024/10/22 00:48:20 by abernade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_FILES = main.c \
 			debug.c \
 			errors.c \
 			hooks.c \
+			minimap.c \
 			render.c \
 			texture_utils.c
 			

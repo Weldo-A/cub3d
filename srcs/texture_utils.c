@@ -6,11 +6,30 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 03:51:08 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/21 18:49:21 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/22 04:07:59 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+void	merge_textures(mlx_texture_t *dest, mlx_texture_t *src, int x, int y)
+{
+	uint32_t	i;
+	uint32_t	j;
+
+	j = 0;
+	while (j < src->width)
+	{
+		i = 0;
+		while (i < src->height)
+		{
+			dest->pixels[(y + j) * dest->width + x + i] \
+				= src->pixels[j * src->width + i];
+			i++;
+		}
+		j++;
+	}
+}
 
 void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img)
 {

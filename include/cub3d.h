@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 04:18:52 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:03:49 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <math.h>
 #include <string.h> // TO BE DELETED
 
-
 # define CAMERA_W 540
 # define CAMERA_H 360
 # define WINDOW_W 1080
@@ -30,7 +29,7 @@
 # define MMAP_X 0
 # define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
 # define MMAP_SQUARE_SIZE 25
-# define MMAP_PIXEL_STEP (float)(1 / MMAP_SQUARE_SIZE)
+# define MMAP_PIXEL_STEP (float)(1 / (float)MMAP_SQUARE_SIZE)
 
 	// Colors //
 # define MMAP_COLOR_1 0x2E3B56FF
@@ -40,13 +39,13 @@
 /*
 String equivalent to a simple valid map
 
-111111
-100101
-101001
-1100N1
-111111
+111111111
+100101011
+101001001
+11000N011
+111111111
 */
-# define MAP_DEBUG "111111\n100101\n101001\n1100N1\n111111"
+# define MAP_DEBUG "11111111110010101110100100111000N011111111111"
 # define FLOOR_DEBUG 0x845207FF
 # define CEILING_DEBUG 0x2D2D2DFF
 

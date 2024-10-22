@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:48:01 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 04:01:57 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:08:25 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ static uint32_t	get_color_at_pos(float x, float y, t_cubdata *cub)
 
 	intx = (int)x;
 	inty = (int)y;
-	if (intx < 0 || inty < 0 \
-		|| intx > (int)cub->map->width || inty > (int)cub->map->height)
-		return (0xFFFFFFFF);
+	printf("intx: %i\t inty: %i\t", intx, inty);
+	if (x < 0 || y < 0 \
+		|| intx >= (int)cub->map->width || inty >= (int)cub->map->height)
+		return (0x000000FF);
 	c = cub->map->map_str[inty * cub->map->width + intx];
-	if (c == 0)
-		return (MMAP_COLOR_0);
-	else
+	if (c == '1')
 		return (MMAP_COLOR_1);
+	else
+		return (MMAP_COLOR_0);
 }
 
 void	update_minimap_texture(t_cubdata *cub)
@@ -47,8 +48,10 @@ void	update_minimap_texture(t_cubdata *cub)
 		x = origin_x;
 		while (i < (int)cub->mmap->width)
 		{
-			((uint32_t *)cub->mmap->pixels)[j * cub->mmap->width + i] = \
-				get_color_at_pos(x, y, cub);
+			printf("x: %f\ty: %f\t", x, y);
+			uint32_t	color = get_color_at_pos(x, y, cub);
+			printf("color:\t%X\n", color);
+			pixel_to_texture(cub->mmap, i, j, color);
 			x += MMAP_PIXEL_STEP;
 			i++;
 		}

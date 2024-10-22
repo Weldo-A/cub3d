@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 17:17:48 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:47:32 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 	// Colors //
 # define MMAP_COLOR_1 0x2E3B56FF
 # define MMAP_COLOR_0 0xFFFFFFFF
+
+	// Player movement //
+# define ANGLE_INCREMENT 0.05f
+# define POS_INCREMENT 0.05f
 
 // DEBUG SECTION, TO BE DELETED
 /*
@@ -80,6 +84,18 @@ typedef struct	s_map
 }	t_map;
 
 /**
+ * @param name String of the name of the asset, serves as identifier
+ * @param tx Texture in which the asset will be loaded
+ * @param next Next node of the list
+ */
+typedef struct	s_asset
+{
+	char			*name;
+	mlx_texture_t	*tx;
+	struct s_asset	*next;
+}	t_asset;
+
+/**
  * Cub3d main data stucture
  *
  * @param mlx Main MLX handle
@@ -97,6 +113,7 @@ typedef struct	s_cubdata
 	mlx_image_t		*main_img;
 	mlx_texture_t	*camera;
 	mlx_texture_t	*mmap;
+	t_asset			*asset_list;
 	t_player_data	*player;
 	t_map			*map;
 	uint32_t		floor_color;
@@ -211,5 +228,26 @@ void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img);
  * @param cub Cub3d main data structure
  */
 void	update_minimap_texture(t_cubdata *cub);
+
+
+	// Input functions | inputs.c //
+/**
+ * @brief Execute functions depending on keys being pressed
+ * 
+ * @param cubdata Cub3d main data structure
+ */
+void	input_check(t_cubdata *cubdata);
+
+
+	// Various utils | utils.c //
+/**
+ * @brief Get a character on the map given x and y coordinates
+ * 
+ * @param cubdata Cub3d main data structure
+ * @param x x coordinate
+ * @param y y coordinate
+ * @return The character on the map corresponding the x and y coordinate
+ */
+char	map_element_at_pos(t_cubdata *cubdata, float x, float y);
 
 #endif

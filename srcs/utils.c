@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 04:15:52 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 22:44:15 by abernade         ###   ########.fr       */
+/*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
+/*   Updated: 2024/10/23 00:32:31 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-void	key_hook(mlx_key_data_t keydata, void *param)
+char	map_element_at_pos(t_cubdata *cub, float x, float y)
 {
-	t_cubdata *cubdata;
+	int	intx;
+	int	inty;
 
-	cubdata = param;
-	if (keydata.key == MLX_KEY_ESCAPE)
-		mlx_close_window(cubdata->mlx);
-	if (keydata.key == MLX_KEY_T)
-		printf("T was pressed\n");
-}
-
-void	generic_hook(void	*cubdata)
-{
-	input_check(cubdata);
-	render(cubdata);
+	intx = (int)x;
+	inty = (int)y;
+	if (intx < 0 || inty < 0 || x > cub->map->width || y > cub->map->height)
+		return ('\0');
+	return (cub->map->map_str[inty * cub->map->width + intx]);
 }

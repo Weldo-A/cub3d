@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:48:01 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 17:22:06 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:36:37 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ void	update_minimap_texture(t_cubdata *cub)
 		y += MMAP_PIXEL_STEP;
 		j++;
 	}
+	//draw_player(cub->mmap);
 }

@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 16:36:21 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:10:56 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	render(t_cubdata *cubdata)
 		set_background(cubdata);
 
 		update_minimap_texture(cubdata);
-		mlx_image_t *img =  mlx_texture_to_image(cubdata->mlx, cubdata->mmap);
-		mlx_image_to_window(cubdata->mlx, img, 0, 0);
-		// merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);
-		// // ray casting part
 		
-		// camera_to_image(cubdata->camera, cubdata->main_img);
+		merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);
+		
+		// ray casting part to do
+		
+		camera_to_image(cubdata->camera, cubdata->main_img);
 
 	}
 	i++;

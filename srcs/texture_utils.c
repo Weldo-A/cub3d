@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 03:51:08 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 04:07:59 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:17:18 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	merge_textures(mlx_texture_t *dest, mlx_texture_t *src, int x, int y)
 		i = 0;
 		while (i < src->height)
 		{
-			dest->pixels[(y + j) * dest->width + x + i] \
-				= src->pixels[j * src->width + i];
+			((uint32_t *)dest->pixels)[(y + j) * dest->width + x + i] \
+				= ((uint32_t *)src->pixels)[j * src->width + i];
 			i++;
 		}
 		j++;

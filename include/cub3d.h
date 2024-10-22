@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 17:03:49 by abernade         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:17:48 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define CAMERA_H 360
 # define WINDOW_W 1080
 # define WINDOW_H 720
-# define MMAP_WIDTH 200
-# define MMAP_HEIGHT 200
+# define MMAP_WIDTH 130
+# define MMAP_HEIGHT 130
 # define MMAP_X 0
 # define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
 # define MMAP_SQUARE_SIZE 25

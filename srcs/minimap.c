@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:48:01 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/23 01:36:37 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:23:32 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,20 @@ static uint32_t	get_color_at_pos(float x, float y, t_cubdata *cub)
 	inty = (int)y;
 	if (x < 0 || y < 0 \
 		|| intx >= (int)cub->map->width || inty >= (int)cub->map->height)
-		return (0x000000FF);
+		return (0x0000FFFF);
 	c = cub->map->map_str[inty * cub->map->width + intx];
 	if (c == '1')
 		return (MMAP_COLOR_1);
 	else
 		return (MMAP_COLOR_0);
+}
+
+void	draw_player(mlx_texture_t *mmap, t_asset *assets)
+{
+	mlx_texture_t	*player_icon;
+
+	player_icon = get_asset(assets, MMAP_PLAYER_ICON);
+	merge_textures(mmap, player_icon, mmap->width / 2, mmap->height / 2);
 }
 
 void	update_minimap_texture(t_cubdata *cub)
@@ -54,5 +62,5 @@ void	update_minimap_texture(t_cubdata *cub)
 		y += MMAP_PIXEL_STEP;
 		j++;
 	}
-	//draw_player(cub->mmap);
+	draw_player(cub ->mmap, cub->asset_list);
 }

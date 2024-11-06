@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 03:51:08 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/22 17:17:18 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:24:13 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,24 @@ void	merge_textures(mlx_texture_t *dest, mlx_texture_t *src, int x, int y)
 {
 	uint32_t	i;
 	uint32_t	j;
+	uint32_t	color;
 
 	j = 0;
-	while (j < src->width)
+	while (j < src->height)
 	{
 		i = 0;
-		while (i < src->height)
+		while (i < src->width)
 		{
-			((uint32_t *)dest->pixels)[(y + j) * dest->width + x + i] \
-				= ((uint32_t *)src->pixels)[j * src->width + i];
+			color = get_color(src, i, j);
+			if (color & 0xFF)
+				pixel_to_texture(dest, i + x, j + y, color);
 			i++;
 		}
 		j++;
 	}
 }
 
-void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img)
+void	texture_to_image(mlx_texture_t *tx, mlx_image_t *img)
 {
 	float		wratio;
 	float		hratio;

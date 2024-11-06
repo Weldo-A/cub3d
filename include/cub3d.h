@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/10/23 01:47:32 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:11:27 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,16 @@
 # define MMAP_COLOR_0 0xFFFFFFFF
 
 	// Player movement //
-# define ANGLE_INCREMENT 0.05f
-# define POS_INCREMENT 0.05f
+# define ANGLE_INCREMENT 0.08f
+# define POS_INCREMENT 0.03f
+
+	// Texture names and paths //
+# define NORTH_TEXTURE "NO"
+# define SOUTH_TEXTURE "SO" 
+# define WEST_TEXTURE "WE"
+# define EAST_TEXTURE "EA"
+# define MMAP_PLAYER_ICON "MMAP_PLAYER_ICON"
+# define MMAP_PLAYER_PATH "assets/circle1.png"
 
 // DEBUG SECTION, TO BE DELETED
 /*
@@ -56,8 +64,11 @@ String equivalent to a simple valid map
 typedef enum error_code
 {
 	MLX_ERR = 1,
-	MALLOC_ERR = 2
-} error_code_t;
+	MALLOC_ERR,
+	ASSET_NAME_ERR,
+	ASSET_NOT_FOUND,
+	ASSET_DELETE_ERR
+}	error_code_t;
 
 /**
  * @param x x coordinate of the player
@@ -128,6 +139,7 @@ typedef struct	s_cubdata
 t_cubdata	*debug_data_init(void);
 
 
+
 	// Cubdata handles | cubdata.c //
 /**
  * @brief Initialize all MLX-related members
@@ -145,6 +157,7 @@ void	cubdata_mlx_init(t_cubdata *cubdata);
  * @param cubdata Cub3d main data structure
  */
 void	delete_cubdata(t_cubdata *cubdata);
+
 
 
 	// Hook functions for mlx | hook.c //
@@ -165,6 +178,7 @@ void	key_hook(mlx_key_data_t keydata, void *cubdata);
 void	generic_hook(void *cubdata);
 
 
+
 	// Rendering | render.c //
 /**
  * @brief Render one frame
@@ -174,6 +188,7 @@ void	generic_hook(void *cubdata);
 void	render(t_cubdata *cubdata);
 
 
+
 	// Error handeling | errors.c //
 /**
  * @brief Handle error and exit
@@ -181,6 +196,8 @@ void	render(t_cubdata *cubdata);
  * @param code Error code
  */
 void	error_exit(error_code_t code);
+
+
 
 	// Texture utils | texture_utils.c //
 /**
@@ -204,9 +221,13 @@ mlx_texture_t	*new_texture(uint32_t width, uint32_t height);
 void	pixel_to_texture(mlx_texture_t *tx, uint32_t x, uint32_t y, uint32_t color);
 
 /**
- * @brief Copy source texture to destination texture starting
- * at coordinates x y
- * 
+ * @brief Copy source texture to destination texture at coordinates x y
+ *
+ * WARNING: Does not support partial transparency.
+ * The destination value will simply be overridden, 
+ * unless source pixel's alpha channel is strictly zero,
+ * in which case the pixel will be ignored.
+ *
  * @param dest Texture to write to
  * @param src Source texture
  * @param x x coordinate on `dest`
@@ -215,12 +236,12 @@ void	pixel_to_texture(mlx_texture_t *tx, uint32_t x, uint32_t y, uint32_t color)
 void	merge_textures(mlx_texture_t *dest, mlx_texture_t *src, int x, int y);
 
 /**
- * @brief Puts and scales camera texture to game main image
+ * @brief Puts and scales a texture to an mlx image
  * 
- * @param tx Texture containing player's rendered environment
- * @param img Image of the game frame
+ * @param tx Texture
+ * @param img Image
  */
-void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img);
+void	texture_to_image(mlx_texture_t *tx, mlx_image_t *img);
 
 /**
  * @brief Update minimap texture, centered on the player
@@ -230,6 +251,7 @@ void	camera_to_image(mlx_texture_t *tx, mlx_image_t *img);
 void	update_minimap_texture(t_cubdata *cub);
 
 
+
 	// Input functions | inputs.c //
 /**
  * @brief Execute functions depending on keys being pressed
@@ -237,6 +259,51 @@ void	update_minimap_texture(t_cubdata *cub);
  * @param cubdata Cub3d main data structure
  */
 void	input_check(t_cubdata *cubdata);
+
+
+
+	// Asset handles | asset_handles.c //
+/**
+ * @brief Load a png asset into a texture and store it in a list
+ * 
+ * @param assets Pointer to a linked list of existing assets
+ * @param path Path to a PNG file
+ * @param name Name of the asset that will serves as identifier and sould be unique
+ */
+void	load_asset(t_asset **assets, const char *path, const char *name);
+
+/**
+ * @brief Delete an asset from the list
+ * 
+ * @param lst Pointer to a linked list of existing assets
+ * @param name Name of the asset to delete
+ */
+void	delete_asset(t_asset **lst, char *name);
+
+/**
+ * @brief Delete all assets, sets the first node of the list to NULL
+ * 
+ * @param lst Pointer to a linked list of existing assets
+ */
+void	delete_all_assets(t_asset **lst);
+
+/**
+ * @brief Check if an asset with the specified name already exists
+ * 
+ * @param assets Linked list of existing assets
+ * @param name Name of the asset
+ * @return Boolean
+ */
+bool	asset_exists(t_asset *assets, const char *name);
+
+/**
+ * @brief Get an asset texture
+ * 
+ * @param assets Linked list of existing assets
+ * @param name Name of the asset
+ * @return const mlx_texture_t* 
+ */
+mlx_texture_t	*get_asset(t_asset *assets, char *name);
 
 
 	// Various utils | utils.c //
@@ -249,5 +316,24 @@ void	input_check(t_cubdata *cubdata);
  * @return The character on the map corresponding the x and y coordinate
  */
 char	map_element_at_pos(t_cubdata *cubdata, float x, float y);
+
+/**
+ * @brief man 3 strcmp
+ * 
+ * @param s1 
+ * @param s2 
+ * @return int 
+ */
+int	ft_strcmp(const char *s1, const char *s2);
+
+/**
+ * @brief Get the color of a texture pixel at x, y coordinates
+ *
+ * @param tx MLX texture to get a color from
+ * @param x x coordinate
+ * @param y y coordinate
+ * @return uint32_t 
+ */
+uint32_t	get_color(const mlx_texture_t *tx, int x, int y);
 
 #endif

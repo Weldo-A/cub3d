@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/06 17:11:27 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:09:44 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h> // TO BE DELETED
+#include <sys/time.h> // TO BE DELETED
+
+# define M_3PI_2 M_PI + M_PI_2
+# define M_2PI_3 2.09439510239319526264f
 
 # define CAMERA_W 540
 # define CAMERA_H 360
@@ -37,7 +41,8 @@
 
 	// Player movement //
 # define ANGLE_INCREMENT 0.08f
-# define POS_INCREMENT 0.03f
+# define POS_INCREMENT 0.02f
+# define WALL_THICKNESS 0.3f // unused ?
 
 	// Texture names and paths //
 # define NORTH_TEXTURE "NO"
@@ -106,6 +111,15 @@ typedef struct	s_asset
 	struct s_asset	*next;
 }	t_asset;
 
+typedef struct	s_ray
+{
+	float	angle;
+	float	origin_x;
+	float	origin_y;
+	float	tmpx;
+	float	tmpy;
+} t_ray;
+
 /**
  * Cub3d main data stucture
  *
@@ -127,6 +141,7 @@ typedef struct	s_cubdata
 	t_asset			*asset_list;
 	t_player_data	*player;
 	t_map			*map;
+	t_ray			rays[CAMERA_W];
 	uint32_t		floor_color;
 	uint32_t		ceiling_color;
 	uint8_t			mmap_sqr_size;

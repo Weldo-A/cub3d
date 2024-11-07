@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/06 17:39:22 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:11:27 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ void	render(t_cubdata *cubdata)
 
 	set_background(cubdata);
 	update_minimap_texture(cubdata);
-	
 
-	// texture_to_image(cubdata->mmap, cubdata->main_img);	
+
 	merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);
 	
 	// // ray casting part to do

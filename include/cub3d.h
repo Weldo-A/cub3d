@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/07 14:01:49 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:49:30 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,16 @@ typedef struct	s_asset
 	struct s_asset	*next;
 }	t_asset;
 
+/**
+ * @param angle Angle of the ray in radian
+ * @param dist_v 
+ * @param dist_h
+ */
 typedef struct	s_ray
 {
 	float	angle;
-	float	step_x;
-	float	step_y;
+	float	dist_v;
+	float	dist_h;
 } t_ray;
 
 /**

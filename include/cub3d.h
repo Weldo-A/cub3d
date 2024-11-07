@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/07 12:09:44 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:01:49 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,8 @@ typedef struct	s_asset
 typedef struct	s_ray
 {
 	float	angle;
-	float	origin_x;
-	float	origin_y;
-	float	tmpx;
-	float	tmpy;
+	float	step_x;
+	float	step_y;
 } t_ray;
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/07 15:49:30 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:38:13 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
 # define MMAP_SQUARE_SIZE 25
 # define MMAP_PIXEL_STEP (float)(1 / (float)MMAP_SQUARE_SIZE)
+# define FOV M_2PI_3
 
 	// Colors //
 # define MMAP_COLOR_1 0x2E3B56FF
@@ -155,6 +156,7 @@ typedef struct	s_cubdata
 
 //TO BE DELETED
 t_cubdata	*debug_data_init(void);
+void	draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color);
 
 
 
@@ -204,6 +206,14 @@ void	generic_hook(void *cubdata);
  * @param cubdata Cub3d Main data structure
  */
 void	render(t_cubdata *cubdata);
+
+	// Rays calculations | rays.c //
+/**
+ * @brief Update rays data (angle and collisions)
+ * 
+ * @param cub Cub3d main data structure
+ */
+void    update_rays(t_cubdata *cub);
 
 
 

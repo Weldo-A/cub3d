@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:48:01 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/07 11:23:18 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:25:24 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ void	update_minimap_texture(t_cubdata *cub)
 		j++;
 	}
 	draw_player(cub ->mmap, cub->asset_list);
-	//printf("%f\tFPS\n", 1 / cub->mlx->delta_time);
 }

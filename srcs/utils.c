@@ -6,22 +6,29 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:43 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:56:19 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-char	map_element_at_pos(t_cubdata *cub, float x, float y)
+float	absolutef(float value)
+{
+	if (value >= 0)
+		return (value);
+	return (-value);
+}
+
+char	map_element_at_pos(t_map *map, float x, float y)
 {
 	int	intx;
 	int	inty;
 
 	intx = (int)x;
 	inty = (int)y;
-	if (intx < 0 || inty < 0 || x > cub->map->width || y > cub->map->height)
-		return ('\0');
-	return (cub->map->map_str[inty * cub->map->width + intx]);
+	if (intx < 0 || inty < 0 || x > map->width || y > map->height)
+		return (0);
+	return (map->map_str[inty * map->width + intx]);
 }
 
 uint32_t	get_color(const mlx_texture_t *tx, int x, int y)

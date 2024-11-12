@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:02 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:56:20 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,29 @@ typedef struct	s_asset
 }	t_asset;
 
 /**
- * @param angle Angle of the ray in radian
- * @param dist_v 
- * @param dist_h
+ * @param angle Angle of the ray in radians
+ * @param inter_v_x X coordinate of the intersection with the closest vertical wall
+ * @param inter_v_y Y coordinate of the intersection with the closest vertical wall
+ * @param dist_v Distance from the closest vertical wall
+ * @param inter_h_x X coordinate of the intersection with the closest horizontal wall
+ * @param inter_h_y Y coordinate of the intersection with the closest horizontal wall
+ * @param dist_h Distance from the closest horizontal wall
  */
 typedef struct	s_ray
 {
 	float	angle;
-	float	dist_v;
-	float	dist_h;
+	float	slope;
+	float	inv_slope;
+	float	step_x;
+	float	step_y;
+	float	v_inter_x;
+	float	v_inter_y;
+	float	v_dist;
+	float	h_inter_x;
+	float	h_inter_y;
+	float	h_dist;
+	bool	hit_v;
+	bool	hit_h;
 } t_ray;
 
 /**
@@ -343,7 +357,7 @@ mlx_texture_t	*get_asset(t_asset *assets, char *name);
  * @param y y coordinate
  * @return The character on the map corresponding the x and y coordinate
  */
-char	map_element_at_pos(t_cubdata *cubdata, float x, float y);
+char	map_element_at_pos(t_map *map, float x, float y);
 
 /**
  * @brief man 3 strcmp
@@ -363,5 +377,13 @@ int	ft_strcmp(const char *s1, const char *s2);
  * @return uint32_t 
  */
 uint32_t	get_color(const mlx_texture_t *tx, int x, int y);
+
+/**
+ * @brief Returns the value's absolute value
+ * 
+ * @param value 
+ * @return float 
+ */
+float	absolutef(float value);
 
 #endif

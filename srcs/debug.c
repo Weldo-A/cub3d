@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:18 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:08:55 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_cubdata	*debug_data_init(void)
 	cubdata->player->x = 5.5f;
 	cubdata->player->y = 3.5f;
 	cubdata->player->angle = M_3PI_2;
+	printf("INITIAL ANGLE %f\n\n", cubdata->player->angle);
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
 
 	return (cubdata);

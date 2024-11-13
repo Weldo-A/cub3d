@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:32:25 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 18:11:03 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:27:30 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,12 @@ void	input_check(t_cubdata *cub)
 {
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_Q))
 	{
-		printf("Input Q");
 		cub->player->angle -= ANGLE_INCREMENT;
 		if (cub->player->angle < 0.0f)
 			cub->player->angle += 2.0f * M_PI;
 	}
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_E))
 	{
-		printf("Input E");
 		cub->player->angle += ANGLE_INCREMENT;
 		if (cub->player->angle > 2.0f * M_PI)
 			cub->player->angle -= 2.0f * M_PI;

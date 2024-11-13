@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 17:56:20 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:19:39 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # define CAMERA_H 360
 # define WINDOW_W 1080
 # define WINDOW_H 720
-# define MMAP_WIDTH 130
-# define MMAP_HEIGHT 130
+# define MMAP_WIDTH 131
+# define MMAP_HEIGHT 131
 # define MMAP_X 0
 # define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
-# define MMAP_SQUARE_SIZE 25
+# define MMAP_SQUARE_SIZE 15
 # define MMAP_PIXEL_STEP (float)(1 / (float)MMAP_SQUARE_SIZE)
 # define FOV M_2PI_3
 
@@ -60,12 +60,13 @@ String equivalent to a simple valid map
 111111111
 100101011
 101001001
-11000N011
+11000N111
 111111111
 */
-# define MAP_DEBUG "11111111110010101110100100111000N011111111111"
+# define MAP_DEBUG "111111111100101011101001001110000011111111111"
 # define FLOOR_DEBUG 0x845207FF
 # define CEILING_DEBUG 0x2D2D2DFF
+# define GREEN 0x3DA600FF
 
 typedef enum error_code
 {
@@ -125,7 +126,7 @@ typedef struct	s_ray
 {
 	float	angle;
 	float	slope;
-	float	inv_slope;
+	float	ninv_slope;
 	float	step_x;
 	float	step_y;
 	float	v_inter_x;

@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:48:01 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:31 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/13 13:21:47 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ static uint32_t	get_color_at_pos(float x, float y, t_cubdata *cub)
 void	draw_player(mlx_texture_t *mmap, t_asset *assets)
 {
 	mlx_texture_t	*player_icon;
+	int				width_r;
+	int				height_r;
 
 	player_icon = get_asset(assets, MMAP_PLAYER_ICON);
+	width_r = mmap->width % 2 + player_icon->width % 2;
+	height_r = mmap->height % 2 + player_icon->height % 2;
 	merge_textures(mmap, player_icon, \
-		(mmap->width / 2) - (player_icon->width / 2) + 1, \
-		(mmap->height / 2) - (player_icon->height / 2) + 1);
+		mmap->width / 2 - player_icon->width / 2 + 1, \
+		mmap->height / 2 - player_icon->height / 2 + 1);
 }
 
 void	update_minimap_texture(t_cubdata *cub)

@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 18:08:55 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:25:18 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_cubdata	*debug_data_init(void)
 	cubdata->player->x = 5.5f;
 	cubdata->player->y = 3.5f;
 	cubdata->player->angle = M_3PI_2;
-	printf("INITIAL ANGLE %f\n\n", cubdata->player->angle);
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
 
 	return (cubdata);
@@ -39,34 +38,101 @@ static int	absolute(int val)
 	return (val > 0 ? val : -val);
 }
 
-// Bresenham
+
+	// Bresenham line draw
+
+static void line_low(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
+{
+	int		dx;
+	int		dy;
+	int		stepy;
+	int		d;
+
+	dx = x1 - x0;
+	dy = y1 - y0;
+	dy = dy > 0 ? dy : -dy;
+	stepy = dy > 0 ? 1 : -1;
+	d = 2 * dy - dx;
+	while (x0 != x1)
+	{
+		if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+			pixel_to_texture(tx, x0, y0, color);
+		if (d > 0)
+		{
+			y0 += stepy;
+			d += 2 * (dy - dx);
+		}
+		else
+			d += 2 * dy;
+		x0++;
+	}
+}
+
+static void line_high(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
+{
+	int		dx;
+	int		dy;
+	int		stepx;
+	int		d;
+
+	dx = x1 - x0;
+	dy = y1 - y0;
+	dx = dx > 0 ? dx : -dx;
+	stepx = dx > 0 ? 1 : -1;
+	d = 2 * dx - dy;
+	while (y0 != y1)
+	{
+		if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+			pixel_to_texture(tx, x0, y0, color);
+		if (d > 0)
+		{
+			x0 += stepx;
+			d += 2 * (dx - dy);
+		}
+		else
+			d += 2 * dx;
+		y0++;
+	}
+}
+
 void	draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
 {
-	float	fstep, pos;
-	int		istep;
-
-	if (absolute(x0 - x1) > (y0 - y1))
+	if (x1 == x0)
 	{
-		istep = (x0 < x1 ? 1 : -1);
-		fstep = (float)(y0 - y1) / (float)(x0 - x1);
-		pos = y0;
-		while (x0 != x1)
-		{
-			pixel_to_texture(tx, x0, (int)pos, color);
-			x0 += istep; pos += fstep;
-		}
-		pixel_to_texture(tx, x0, (int)pos, color);
-	}
-	else if (absolute(x0 - x1) < (y0 - y1))
-	{
-		istep = (y0 < y1 ? 1 : -1);
-		fstep = (float)(x0 - x1) / (float)(y0 - y1);
-		pos = x0;
+		int step = y1 > y0 ? 1 : -1;
 		while (y0 != y1)
 		{
-			pixel_to_texture(tx, (int)pos, y0, color);
-			y0 += istep; pos += fstep;
+			if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+				pixel_to_texture(tx, x0, y0, color);
+			y0 += step;
 		}
-		pixel_to_texture(tx, (int)pos, y0, color);
+		if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+			pixel_to_texture(tx, x0, y0, color);
+	}
+	else if (y1 == y0)
+	{
+		int step = x1 > x0 ? 1 : -1;
+		while (x0 != x1)
+		{
+			if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+				pixel_to_texture(tx, x0, y0, color);
+			x0 += step;
+		}
+		if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+			pixel_to_texture(tx, x0, y0, color);
+	}
+	else if (absolute(x0 - x1) > absolute(y0 - y1))
+	{
+		if (x1 > x0)
+			line_low(x0, y0, x1, y1, tx, color);
+		else
+			line_low(x1, y1, x0, y0, tx, color);
+	}
+	else
+	{
+		if (y1 > y0)
+			line_high(x0, y0, x1, y1, tx, color);
+		else
+			line_high(x1, y1, x0, y0, tx, color);
 	}
 }

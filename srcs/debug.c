@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/13 18:25:18 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:43:26 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void line_low(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int colo
 
 	dx = x1 - x0;
 	dy = y1 - y0;
-	dy = dy > 0 ? dy : -dy;
 	stepy = dy > 0 ? 1 : -1;
+	dy = dy > 0 ? dy : -dy;
 	d = 2 * dy - dx;
 	while (x0 != x1)
 	{
@@ -66,6 +66,8 @@ static void line_low(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int colo
 			d += 2 * dy;
 		x0++;
 	}
+	if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+		pixel_to_texture(tx, x0, y0, color);
 }
 
 static void line_high(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
@@ -77,8 +79,8 @@ static void line_high(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int col
 
 	dx = x1 - x0;
 	dy = y1 - y0;
-	dx = dx > 0 ? dx : -dx;
 	stepx = dx > 0 ? 1 : -1;
+	dx = dx > 0 ? dx : -dx;
 	d = 2 * dx - dy;
 	while (y0 != y1)
 	{
@@ -93,6 +95,8 @@ static void line_high(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int col
 			d += 2 * dx;
 		y0++;
 	}
+	if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
+		pixel_to_texture(tx, x0, y0, color);
 }
 
 void	draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
@@ -121,18 +125,26 @@ void	draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
 		if (x0 >= 0 && (uint32_t)x0 < tx->width && y0 >= 0 && (uint32_t)y0 < tx->height)
 			pixel_to_texture(tx, x0, y0, color);
 	}
-	else if (absolute(x0 - x1) > absolute(y0 - y1))
+	else if (absolute(x1 - x0) > absolute(y1 - y0))
 	{
 		if (x1 > x0)
+		{
 			line_low(x0, y0, x1, y1, tx, color);
+		}
 		else
+		{
 			line_low(x1, y1, x0, y0, tx, color);
+		}
 	}
 	else
 	{
 		if (y1 > y0)
+		{
 			line_high(x0, y0, x1, y1, tx, color);
+		}
 		else
+		{
 			line_high(x1, y1, x0, y0, tx, color);
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/13 13:48:49 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/15 17:29:50 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,20 @@ static void	set_background(t_cubdata * cubdata)
 
 void	render(t_cubdata *cubdata)
 {
-	set_background(cubdata);
+	static int	once = 0;
 
-	update_minimap_texture(cubdata);
-	
-	
-	// ray casting part to do
-	update_rays(cubdata);
+	if (!once || once)
+	{
+		set_background(cubdata);
 
-	merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);
-	texture_to_image(cubdata->camera, cubdata->main_img);
+		update_minimap_texture(cubdata);
+		
+		update_rays(cubdata);
+
+		merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);
+
+		texture_to_image(cubdata->camera, cubdata->main_img);
+	}
+	
+	once++;
 }

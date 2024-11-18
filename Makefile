@@ -6,7 +6,7 @@
 #    By: weldo <weldo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/11/11 17:40:03 by weldo            ###   ########.fr        #
+#    Updated: 2024/11/18 16:05:52 by weldo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_FILES := main.c \
 			hooks.c \
 			inputs.c \
 			minimap.c \
-			rays.c \
+			ray_utils.c \
 			render.c \
 			texture_utils.c \
 			utils.c

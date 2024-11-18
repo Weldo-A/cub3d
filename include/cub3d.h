@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/13 16:19:39 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:38:32 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 # define M_3PI_2 M_PI + M_PI_2
 # define M_2PI_3 2.09439510239319526264f
+# define M_2PI_3 2.09439510239319526264f
+# define M_PI_3 1.047197551f
 
 # define CAMERA_W 540
 # define CAMERA_H 360
@@ -34,7 +36,7 @@
 # define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
 # define MMAP_SQUARE_SIZE 15
 # define MMAP_PIXEL_STEP (float)(1 / (float)MMAP_SQUARE_SIZE)
-# define FOV M_2PI_3
+# define FOV M_PI_3
 
 	// Colors //
 # define MMAP_COLOR_1 0x2E3B56FF
@@ -43,7 +45,6 @@
 	// Player movement //
 # define ANGLE_INCREMENT 0.08f
 # define POS_INCREMENT 0.02f
-# define WALL_THICKNESS 0.3f // unused ?
 
 	// Texture names and paths //
 # define NORTH_TEXTURE "NO"
@@ -57,13 +58,16 @@
 /*
 String equivalent to a simple valid map
 
-111111111
-100101011
-101001001
-11000N111
-111111111
+1111111111
+1001010101
+1001010001
+1100000001
+1000000111
+1000000001
+11100N0001
+1111111111
 */
-# define MAP_DEBUG "111111111100101011101001001110000011111111111"
+# define MAP_DEBUG "11111111111001010101100101000111000000011000000111100000000111100000011111111111"
 # define FLOOR_DEBUG 0x845207FF
 # define CEILING_DEBUG 0x2D2D2DFF
 # define GREEN 0x3DA600FF
@@ -222,13 +226,15 @@ void	generic_hook(void *cubdata);
  */
 void	render(t_cubdata *cubdata);
 
-	// Rays calculations | rays.c //
+
+
+	// Rays calculations | ray_utils.c //
 /**
- * @brief Update rays data (angle and collisions)
+ * @brief Update rays data
  * 
  * @param cub Cub3d main data structure
  */
-void    update_rays(t_cubdata *cub);
+void	update_rays(t_cubdata *cub);
 
 
 

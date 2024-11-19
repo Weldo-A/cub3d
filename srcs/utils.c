@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/15 17:05:13 by weldo            ###   ########.fr       */
+/*   Updated: 2024/11/19 15:31:42 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+float remap(int n, int in_min, int in_max, int out_min, int out_max)
+{
+	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+}
+
+float remapf(float n, float in_min, float in_max, \
+	float out_min, float out_max)
+{
+	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+}
 
 float	absolutef(float value)
 {
@@ -29,19 +40,6 @@ char	map_element_at_pos(t_map *map, float x, float y)
 	if (intx < 0 || inty < 0 || x > map->width || y > map->height)
 		return (0);
 	return (map->map_str[inty * map->width + intx]);
-}
-
-uint32_t	get_color(const mlx_texture_t *tx, int x, int y)
-{
-	uint32_t	color;
-	int			offset;
-
-	offset = (y * tx->width + x) * 4;
-	color = ((uint32_t)tx->pixels[offset++] << 24);
-	color |= ((uint32_t)tx->pixels[offset++] << 16);
-	color |= ((uint32_t)tx->pixels[offset++] << 8);
-	color |= (uint32_t)tx->pixels[offset];
-	return (color);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)

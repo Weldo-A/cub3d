@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:07 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:12 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:52:14 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ bool	asset_exists(t_asset *assets, const char *name)
 	node = assets;
 	while (node)
 	{
-		if (ft_strcmp(name, node->name))
+		if (!ft_strcmp(name, node->name))
 			return (true);
+		node = node->next;
 	}
 	return (false);
 }

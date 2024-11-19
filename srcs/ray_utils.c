@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ray_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/18 18:41:52 by weldo            ###   ########.fr       */
+/*   Updated: 2024/11/19 16:43:57 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-static float remap(float n, float in_min, float in_max, \
-	float out_min, float out_max)
-{
-	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-}
 
 static void	v_collision(float originx, float originy, t_map *map, t_ray *ray)
 {
@@ -38,8 +32,7 @@ static void	v_collision(float originx, float originy, t_map *map, t_ray *ray)
 		y += yo;
 		x += ray->step_x;
 	}
-	ray->hit_v = (dof <= 10);
-	if (ray->hit_v)
+	if (dof <= 10)
 	{
 		ray->v_inter_x = x;
 		ray->v_inter_y = y;
@@ -70,8 +63,7 @@ static void	h_collision(float originx, float originy, t_map *map, t_ray *ray)
 		x += xo;
 		y += ray->step_y;
 	}
-	ray->hit_h = (dof <= 10);
-	if (ray->hit_h)
+	if (dof <= 10)
 	{
 		ray->h_inter_x = x;
 		ray->h_inter_y = y;
@@ -82,9 +74,9 @@ static void	h_collision(float originx, float originy, t_map *map, t_ray *ray)
 		ray->h_dist = 1000000.0f;
 }
 
-static void	update_ray(t_ray *ray, float max_angle, float min_angle, int i)
+static void	prepare_ray(t_ray *ray, float max_angle, float min_angle, int i)
 {
-	ray->angle = remap(i, 0.0f, CAMERA_W - 1.0f, min_angle, max_angle);
+	ray->angle = remapf(i, 0.0f, CAMERA_W - 1.0f, min_angle, max_angle);
 	if (ray->angle > 2.0f * M_PI)
 		ray->angle -= 2.0f * M_PI;
 	else if (ray->angle < 0.0f)
@@ -104,8 +96,29 @@ static void	update_ray(t_ray *ray, float max_angle, float min_angle, int i)
 		ray->step_y = 1.0f;
 	else
 		ray->step_y = -1.0f;
-	ray->hit_h = false;
-	ray->hit_v = false;
+}
+
+static void update_ray(t_cubdata *cub, int idx)
+{
+	float	discard;
+
+	if (cub->rays[idx].v_dist < cub->rays[idx].h_dist)
+	{
+		if (cub->rays[idx].angle > M_PI_2 && cub->rays[idx].angle < M_3PI_2)
+			cub->rays[idx].wall_tx = get_asset(cub->asset_list, EAST_TX);
+		else
+			cub->rays[idx].wall_tx = get_asset(cub->asset_list, WEST_TX);
+		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard);
+	}
+	else
+	{
+		if (cub->rays[idx].angle < M_PI)
+			cub->rays[idx].wall_tx = get_asset(cub->asset_list, NORTH_TX);
+		else
+			cub->rays[idx].wall_tx = get_asset(cub->asset_list, SOUTH_TX);
+		cub->rays[idx].offset = modff(cub->rays[idx].h_inter_x, &discard);
+	}
+	(void)discard;
 }
 
 void	update_rays(t_cubdata *cub)
@@ -119,9 +132,10 @@ void	update_rays(t_cubdata *cub)
 	min_angle = cub->player->angle - (FOV / 2.0f);
     while (i < CAMERA_W)
     {
-		update_ray(&cub->rays[i], max_angle, min_angle, i);
+		prepare_ray(&cub->rays[i], max_angle, min_angle, i);
 		v_collision(cub->player->x, cub->player->y, cub->map, &cub->rays[i]);
 		h_collision(cub->player->x, cub->player->y, cub->map, &cub->rays[i]);
+		update_ray(cub, i);
 		i++;
 	}
 }

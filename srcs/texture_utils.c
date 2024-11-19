@@ -6,11 +6,31 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 03:51:08 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/13 13:45:31 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:14:10 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+uint32_t	get_color(const mlx_texture_t *tx, int x, int y)
+{
+	uint32_t	color;
+	int			offset;
+
+	// debug
+	uint32_t	size = tx->width * tx->height;
+	if (y * tx->width + x > size)
+	{
+		printf("\nx: %d\ty: %d\twidth %d\tsize %d\n", x, y, tx->width, size);
+	}
+
+	offset = (y * tx->width + x) * 4;
+	color = ((uint32_t)tx->pixels[offset++] << 24);
+	color |= ((uint32_t)tx->pixels[offset++] << 16);
+	color |= ((uint32_t)tx->pixels[offset++] << 8);
+	color |= (uint32_t)tx->pixels[offset];
+	return (color);
+}
 
 void	merge_textures(mlx_texture_t *dest, mlx_texture_t *src, int x, int y)
 {

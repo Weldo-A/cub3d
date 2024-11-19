@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/18 18:38:32 by weldo            ###   ########.fr       */
+/*   Updated: 2024/11/19 16:45:54 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@
 # define M_2PI_3 2.09439510239319526264f
 # define M_PI_3 1.047197551f
 
-# define CAMERA_W 540
-# define CAMERA_H 360
+# define CAMERA_W 1080
+# define CAMERA_H 720
 # define WINDOW_W 1080
 # define WINDOW_H 720
-# define MMAP_WIDTH 131
-# define MMAP_HEIGHT 131
+# define MMAP_WIDTH 260
+# define MMAP_HEIGHT 260
 # define MMAP_X 0
 # define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
-# define MMAP_SQUARE_SIZE 15
+# define MMAP_SQUARE_SIZE 30
 # define MMAP_PIXEL_STEP (float)(1 / (float)MMAP_SQUARE_SIZE)
 # define FOV M_PI_3
 
@@ -43,16 +43,22 @@
 # define MMAP_COLOR_0 0xFFFFFFFF
 
 	// Player movement //
-# define ANGLE_INCREMENT 0.08f
-# define POS_INCREMENT 0.02f
+# define ANGLE_INCREMENT 0.05f
+# define POS_INCREMENT 0.03f
 
 	// Texture names and paths //
-# define NORTH_TEXTURE "NO"
-# define SOUTH_TEXTURE "SO" 
-# define WEST_TEXTURE "WE"
-# define EAST_TEXTURE "EA"
+# define NORTH_TX "NO"
+# define SOUTH_TX "SO" 
+# define WEST_TX "WE"
+# define EAST_TX "EA"
 # define MMAP_PLAYER_ICON "MMAP_PLAYER_ICON"
 # define MMAP_PLAYER_PATH "assets/circle1.png"
+
+	// Wall types //
+# define WALL_N 0
+# define WALL_S 1
+# define WALL_E 2
+# define WALL_W 3
 
 // DEBUG SECTION, TO BE DELETED
 /*
@@ -128,19 +134,19 @@ typedef struct	s_asset
  */
 typedef struct	s_ray
 {
-	float	angle;
-	float	slope;
-	float	ninv_slope;
-	float	step_x;
-	float	step_y;
-	float	v_inter_x;
-	float	v_inter_y;
-	float	v_dist;
-	float	h_inter_x;
-	float	h_inter_y;
-	float	h_dist;
-	bool	hit_v;
-	bool	hit_h;
+	float			angle;
+	float			slope;
+	float			ninv_slope;
+	float			step_x;
+	float			step_y;
+	float			v_inter_x;
+	float			v_inter_y;
+	float			v_dist;
+	float			h_inter_x;
+	float			h_inter_y;
+	float			h_dist;
+	float			offset;
+	mlx_texture_t	*wall_tx;
 } t_ray;
 
 /**
@@ -270,6 +276,16 @@ mlx_texture_t	*new_texture(uint32_t width, uint32_t height);
 void	pixel_to_texture(mlx_texture_t *tx, uint32_t x, uint32_t y, uint32_t color);
 
 /**
+ * @brief Get the color of a texture pixel at x, y coordinates
+ *
+ * @param tx MLX texture to get a color from
+ * @param x x coordinate
+ * @param y y coordinate
+ * @return uint32_t 
+ */
+uint32_t	get_color(const mlx_texture_t *tx, int x, int y);
+
+/**
  * @brief Copy source texture to destination texture at coordinates x y
  *
  * WARNING: Does not support partial transparency.
@@ -292,6 +308,9 @@ void	merge_textures(mlx_texture_t *dest, mlx_texture_t *src, int x, int y);
  */
 void	texture_to_image(mlx_texture_t *tx, mlx_image_t *img);
 
+
+
+	// Minimap | minimap.c //
 /**
  * @brief Update minimap texture, centered on the player
  * 
@@ -346,7 +365,7 @@ void	delete_all_assets(t_asset **lst);
 bool	asset_exists(t_asset *assets, const char *name);
 
 /**
- * @brief Get an asset texture
+ * @brief Get an asset texture from the list
  * 
  * @param assets Linked list of existing assets
  * @param name Name of the asset
@@ -375,15 +394,6 @@ char	map_element_at_pos(t_map *map, float x, float y);
  */
 int	ft_strcmp(const char *s1, const char *s2);
 
-/**
- * @brief Get the color of a texture pixel at x, y coordinates
- *
- * @param tx MLX texture to get a color from
- * @param x x coordinate
- * @param y y coordinate
- * @return uint32_t 
- */
-uint32_t	get_color(const mlx_texture_t *tx, int x, int y);
 
 /**
  * @brief Returns the value's absolute value
@@ -392,5 +402,29 @@ uint32_t	get_color(const mlx_texture_t *tx, int x, int y);
  * @return float 
  */
 float	absolutef(float value);
+
+/**
+ * @brief remap a float from one range to an other
+ * 
+ * @param n 
+ * @param in_min 
+ * @param in_max 
+ * @param out_min 
+ * @param out_max 
+ * @return float 
+ */
+float	remapf(float n, float in_min, float in_max, float out_min, float out_max);
+
+/**
+ * @brief remap an int from one range to an other
+ * 
+ * @param n 
+ * @param in_min 
+ * @param in_max 
+ * @param out_min 
+ * @param out_max 
+ * @return float 
+ */
+float remap(int n, int in_min, int in_max, int out_min, int out_max);
 
 #endif

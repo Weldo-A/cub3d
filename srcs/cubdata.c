@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:38:37 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/07 11:49:01 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:50:10 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	cubdata_mlx_init(t_cubdata *cubdata)
 		error_exit(MLX_ERR);
 	cubdata->camera = new_texture(CAMERA_W, CAMERA_H);
 	cubdata->mmap = new_texture(MMAP_WIDTH, MMAP_HEIGHT);
-	cubdata->asset_list = NULL;
 	load_asset(&cubdata->asset_list, MMAP_PLAYER_PATH, MMAP_PLAYER_ICON);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/18 18:04:30 by weldo            ###   ########.fr       */
+/*   Updated: 2024/11/19 16:48:26 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ t_cubdata	*debug_data_init(void)
 	cubdata->player->y = 6.5f;
 	cubdata->player->angle = M_3PI_2;
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
-
+	cubdata->asset_list = NULL;
+	load_asset(&cubdata->asset_list, "assets/Brickwall6_Texture.png", NORTH_TX);
+	load_asset(&cubdata->asset_list, "assets/Brickwall5_Texture.png", SOUTH_TX);
+	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", WEST_TX);
+	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", EAST_TX);
 	return (cubdata);
 }
 

@@ -3,58 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/18 18:30:27 by weldo            ###   ########.fr       */
+/*   Updated: 2024/11/19 17:35:36 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-static void	set_background(t_cubdata * cubdata)
+static void	draw_stripe(t_cubdata *cub, mlx_texture_t *tx, int line_h, int idx \
+	, float offset)
 {
 	int	x;
 	int	y;
-
-	y = 0;
-	while (y < CAMERA_H / 2)
-	{
-		x = 0;
-		while (x < CAMERA_W)
-		{
-			pixel_to_texture(cubdata->camera, x, y, cubdata->ceiling_color);
-			x++;
-		}
-		y++;
-	}
-	while (y < CAMERA_H)
-	{
-		x = 0;
-		while (x < CAMERA_W)
-		{
-			pixel_to_texture(cubdata->camera, x, y, cubdata->floor_color);
-			x++;
-		}
-		y++;
-	}
-}
-
-static void	draw_stripe(t_cubdata *cub, int line_h, int idx)
-{
-	int line_start;
-	int line_end;
+	int	line_start;
+	int	line_end;
 	int	i;
 
 	line_start = CAMERA_H / 2 - line_h / 2;
 	line_end = CAMERA_H / 2 + line_h / 2;
+	x = (int)roundf(remapf(offset, 0.0f, 1.0f, 0.0f, tx->width - 1));
 	i = 0;
 	while (i < CAMERA_H)
 	{
 		if (i < line_start)
 			pixel_to_texture(cub->camera, idx, i, cub->ceiling_color);
-		else if (i <= line_end)
-			pixel_to_texture(cub->camera, idx, i, GREEN);
+		else if (i < line_end)
+		{
+			y = remap(i - line_start, 0, line_h - 1, 0, tx->height - 1);
+			if (y >= (int)tx->height)
+				printf("y %d\theight %d\n", y, tx->height);
+			pixel_to_texture(cub->camera, idx, i, get_color(tx, x, y));
+		}
 		else
 			pixel_to_texture(cub->camera, idx, i, cub->floor_color);
 		i++;
@@ -82,16 +63,14 @@ static void	draw_walls(t_cubdata *cub)
 			dist = cub->rays[i].v_dist;
 		dist *= cosf(da);
 		line_height = ((float)CAMERA_H / dist) * 0.9f;
-		if (line_height > CAMERA_H)
-			line_height = CAMERA_H;
-		draw_stripe(cub, line_height, i);
+		draw_stripe(cub, cub->rays[i].wall_tx, line_height, i, \
+			cub->rays[i].offset);
 		i++;
 	}
 }
 
 void	render(t_cubdata *cubdata)
 {
-	set_background(cubdata);
 	update_minimap_texture(cubdata);
 	update_rays(cubdata);
 	draw_walls(cubdata);

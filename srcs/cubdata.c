@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:38:37 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 15:50:10 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:57:05 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@ void	cubdata_mlx_init(t_cubdata *cubdata)
 
 void	delete_cubdata(t_cubdata *cubdata)
 {
+	delete_all_assets(&cubdata->asset_list);
+	mlx_delete_texture(cubdata->camera);
+	mlx_delete_texture(cubdata->mmap);
 	mlx_delete_image(cubdata->mlx, cubdata->main_img);
 	mlx_terminate(cubdata->mlx);
+	free(cubdata->player);
+	free(cubdata->map->map_str);
 	free(cubdata->map);
 	free(cubdata);
 }

@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 17:35:36 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:41:50 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void	draw_stripe(t_cubdata *cub, mlx_texture_t *tx, int line_h, int idx \
 		else if (i < line_end)
 		{
 			y = remap(i - line_start, 0, line_h - 1, 0, tx->height - 1);
-			if (y >= (int)tx->height)
-				printf("y %d\theight %d\n", y, tx->height);
 			pixel_to_texture(cub->camera, idx, i, get_color(tx, x, y));
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 14:07:11 by weldo            ###   ########.fr       */
+/*   Updated: 2024/11/20 15:37:29 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 # define M_2PI_3 2.09439510239319526264f
 # define M_PI_3 1.047197551f
 
-# define CAMERA_W 1080
-# define CAMERA_H 720
+# define CAMERA_W 800
+# define CAMERA_H 800
 # define PROJPLANE_DIST 1.0f
 
-# define WINDOW_W 1080
+# define WINDOW_W 720
 # define WINDOW_H 720
 # define MMAP_WIDTH 260
 # define MMAP_HEIGHT 260
@@ -46,7 +46,8 @@
 
 	// Player movement //
 # define ANGLE_INCREMENT 0.05f
-# define POS_INCREMENT 0.03f
+# define POS_INCREMENT 0.035f
+# define MOUSE_ANGLE_RATIO 0.0016f
 
 	// Texture names and paths //
 # define NORTH_TX "NO"

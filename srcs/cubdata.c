@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubdata.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:38:37 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 17:57:05 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 02:06:45 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	cubdata_mlx_init(t_cubdata *cubdata)
 	cubdata->camera = new_texture(CAMERA_W, CAMERA_H);
 	cubdata->mmap = new_texture(MMAP_WIDTH, MMAP_HEIGHT);
 	load_asset(&cubdata->asset_list, MMAP_PLAYER_PATH, MMAP_PLAYER_ICON);
+	cubdata->projplane_w = PROJPLANE_DIST * tanf(FOV / 2) * 2;
 }
 
 void	delete_cubdata(t_cubdata *cubdata)

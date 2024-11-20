@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 17:41:50 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 01:49:42 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,4 @@ void	render(t_cubdata *cubdata)
 	draw_walls(cubdata);
 	merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);
 	texture_to_image(cubdata->camera, cubdata->main_img);
-
 }

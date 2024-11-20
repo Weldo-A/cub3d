@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 17:50:56 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:07:11 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 # define CAMERA_W 1080
 # define CAMERA_H 720
+# define PROJPLANE_DIST 1.0f
+
 # define WINDOW_W 1080
 # define WINDOW_H 720
 # define MMAP_WIDTH 260
@@ -173,9 +175,8 @@ typedef struct	s_cubdata
 	t_ray			rays[CAMERA_W];
 	uint32_t		floor_color;
 	uint32_t		ceiling_color;
+	float			projplane_w;
 	uint8_t			mmap_sqr_size;
-
-	int				debug; // TO BE DELETED
 }	t_cubdata;
 
 
@@ -395,6 +396,7 @@ char	map_element_at_pos(t_map *map, float x, float y);
 int	ft_strcmp(const char *s1, const char *s2);
 
 
+	// Math utils | math_utils.c //
 /**
  * @brief Returns the value's absolute value
  * 
@@ -426,5 +428,18 @@ float	remapf(float n, float in_min, float in_max, float out_min, float out_max);
  * @return float 
  */
 float remap(int n, int in_min, int in_max, int out_min, int out_max);
+
+/**
+ * @brief Returns the angle of a ray. The index of the ray is mapped
+ * linearly to a point on the projection plane. The angle of the ray passing
+ * through that point is the returned value. Doing this instead of mapping
+ * the angle linearly to a range avoids distortion around the edges.
+ * 
+ * @param idx Index of the ray
+ * @param projplane_width Width of the projection plane used to map
+ * @param face_angle Angle the player is facing
+ * @return float 
+ */
+float	map_angle(int idx, float projplane_width, float face_angle);
 
 #endif

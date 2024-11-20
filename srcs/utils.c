@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 15:31:42 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 00:29:56 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-float remap(int n, int in_min, int in_max, int out_min, int out_max)
-{
-	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-}
-
-float remapf(float n, float in_min, float in_max, \
-	float out_min, float out_max)
-{
-	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-}
-
-float	absolutef(float value)
-{
-	if (value >= 0)
-		return (value);
-	return (-value);
-}
 
 char	map_element_at_pos(t_map *map, float x, float y)
 {

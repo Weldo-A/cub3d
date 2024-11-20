@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_utils.c                                        :+:      :+:    :+:   */
+/*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: weldo <weldo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/19 16:43:57 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 01:51:08 by weldo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ static void	h_collision(float originx, float originy, t_map *map, t_ray *ray)
 		ray->h_dist = 1000000.0f;
 }
 
-static void	prepare_ray(t_ray *ray, float max_angle, float min_angle, int i)
+static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
 {
-	ray->angle = remapf(i, 0.0f, CAMERA_W - 1.0f, min_angle, max_angle);
+	ray->angle = map_angle(i, projplane_w, p_angle);
 	if (ray->angle > 2.0f * M_PI)
 		ray->angle -= 2.0f * M_PI;
 	else if (ray->angle < 0.0f)
@@ -124,15 +124,11 @@ static void update_ray(t_cubdata *cub, int idx)
 void	update_rays(t_cubdata *cub)
 {
 	int 	i;
-	float	max_angle;
-	float	min_angle;
 
     i = 0;
-	max_angle = cub->player->angle + (FOV / 2.0f);
-	min_angle = cub->player->angle - (FOV / 2.0f);
     while (i < CAMERA_W)
     {
-		prepare_ray(&cub->rays[i], max_angle, min_angle, i);
+		prepare_ray(&cub->rays[i], cub->projplane_w, cub->player->angle, i);
 		v_collision(cub->player->x, cub->player->y, cub->map, &cub->rays[i]);
 		h_collision(cub->player->x, cub->player->y, cub->map, &cub->rays[i]);
 		update_ray(cub, i);

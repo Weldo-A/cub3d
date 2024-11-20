@@ -6,7 +6,7 @@
 #    By: weldo <weldo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/11/18 16:05:52 by weldo            ###   ########.fr        #
+#    Updated: 2024/11/20 01:27:11 by weldo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,11 @@ SRC_FILES := main.c \
 			hooks.c \
 			inputs.c \
 			minimap.c \
-			ray_utils.c \
+			math_utils.c \
+			rays.c \
 			render.c \
 			texture_utils.c \
 			utils.c
-			
 
 SRC := $(SRC_FILES:%.c=$(SRC_DIR)/%.c)
 

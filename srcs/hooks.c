@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:15:52 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 15:33:49 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:27:32 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	t_cubdata *cubdata;
+	t_cubdata	*cubdata;
 
 	cubdata = param;
 	if (keydata.key == MLX_KEY_ESCAPE)
@@ -23,13 +23,16 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 
 static void	mouse_check(t_cubdata *cub)
 {
-	static int32_t	oldx = 2147483647;
+	static int		changes = 0;
+	static int32_t	oldx = 0;
 	int32_t			x;
 	int32_t			y;
 
 	mlx_get_mouse_pos(cub->mlx, &x, &y);
 	(void)y;
-	if (oldx != 2147483647)
+	if (changes < 2 && oldx != x)
+		changes++;
+	else
 		cub->player->angle += (x - oldx) * MOUSE_ANGLE_RATIO;
 	oldx = x;
 	if (cub->player->angle < 0)

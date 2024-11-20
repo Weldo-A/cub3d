@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 15:37:29 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:20:39 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 # define M_2PI_3 2.09439510239319526264f
 # define M_PI_3 1.047197551f
 
-# define CAMERA_W 800
-# define CAMERA_H 800
+# define CAMERA_W 900
+# define CAMERA_H 900
 # define PROJPLANE_DIST 1.0f
 
-# define WINDOW_W 720
-# define WINDOW_H 720
+# define WINDOW_W 900
+# define WINDOW_H 900
 # define MMAP_WIDTH 260
 # define MMAP_HEIGHT 260
 # define MMAP_X 0
@@ -349,13 +349,6 @@ void	load_asset(t_asset **assets, const char *path, const char *name);
  * @param name Name of the asset to delete
  */
 void	delete_asset(t_asset **lst, char *name);
-
-/**
- * @brief Delete all assets, sets the first node of the list to NULL
- * 
- * @param lst Pointer to a linked list of existing assets
- */
-void	delete_all_assets(t_asset **lst);
 
 /**
  * @brief Check if an asset with the specified name already exists

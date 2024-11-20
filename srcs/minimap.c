@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:48:01 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:48 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:36:05 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	update_minimap_texture(t_cubdata *cub)
 	float	y;
 	float	origin_x;
 
-	origin_x = cub->player->x - ((float)cub->mmap->width / 2 / cub->mmap_sqr_size);
+	origin_x = cub->player->x - \
+		((float)cub->mmap->width / 2 / cub->mmap_sqr_size);
 	y = cub->player->y - ((float)cub->mmap->height / 2 / cub->mmap_sqr_size);
 	j = 0;
 	while (j < (int)cub->mmap->height)

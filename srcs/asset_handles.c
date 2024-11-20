@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:48:07 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:27 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:34:59 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	load_asset(t_asset **assets, const char *path, const char *name)
 
 bool	asset_exists(t_asset *assets, const char *name)
 {
-	t_asset *node;
+	t_asset	*node;
 
 	node = assets;
 	while (node)
@@ -86,23 +86,6 @@ void	delete_asset(t_asset **lst, char *name)
 		prev = node;
 		node = node->next;
 	}
-}
-
-void	delete_all_assets(t_asset **lst)
-{
-	t_asset	*node;
-	t_asset	*next;
-
-	node = *lst;
-	while (node)
-	{
-		next = node->next;
-		mlx_delete_texture(node->tx);
-		free(node->name);
-		free(node);
-		node = next;
-	}
-	*lst = NULL;
 }
 
 mlx_texture_t	*get_asset(t_asset *assets, char *name)

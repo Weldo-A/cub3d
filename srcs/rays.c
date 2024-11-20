@@ -6,13 +6,13 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:51 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:38:01 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-static void	v_collision(float originx, float originy, t_map *map, t_ray *ray)
+static void	v_collision(float px, float py, t_map *map, t_ray *ray)
 {
 	float	x;
 	float	y;
@@ -21,29 +21,27 @@ static void	v_collision(float originx, float originy, t_map *map, t_ray *ray)
 
 	if (ray->slope == INFINITY)
 		return ;
-	x = floorf(originx) + (ray->step_x > 0.0f);
-	y = -ray->slope * (originx - x) + originy;
+	x = floorf(px) + (ray->step_x > 0.0f);
+	y = -ray->slope * (px - x) + py;
 	yo = ray->step_x * ray->slope;
 	dof = 0;
-	while (dof++ < 10)
+	ray->v_dist = 1000000.0f;
+	while (dof++ < 15)
 	{
 		if (map_element_at_pos(map, x + 0.1f * ray->step_x, y) == '1')
-			break;
+			break ;
 		y += yo;
 		x += ray->step_x;
 	}
-	if (dof <= 10)
+	if (dof <= 15)
 	{
 		ray->v_inter_x = x;
 		ray->v_inter_y = y;
-		ray->v_dist = sqrtf((originx - x) * (originx - x) \
-			+ (originy - y) * (originy - y));
+		ray->v_dist = sqrtf((px - x) * (px - x) + (py - y) * (py - y));
 	}
-	else
-		ray->v_dist = 1000000.0f;
 }
 
-static void	h_collision(float originx, float originy, t_map *map, t_ray *ray)
+static void	h_collision(float px, float py, t_map *map, t_ray *ray)
 {
 	float	x;
 	float	y;
@@ -52,26 +50,24 @@ static void	h_collision(float originx, float originy, t_map *map, t_ray *ray)
 
 	if (ray->ninv_slope == INFINITY)
 		return ;
-	y = floorf(originy) + (ray->step_y > 0.0f);
-	x = originx + ray->ninv_slope * (originy - y);
+	y = floorf(py) + (ray->step_y > 0.0f);
+	x = px + ray->ninv_slope * (py - y);
 	xo = -ray->step_y * ray->ninv_slope;
 	dof = 0;
-	while (dof++ < 10)
+	ray->h_dist = 1000000.0f;
+	while (dof++ < 15)
 	{
 		if (map_element_at_pos(map, x, y + 0.1f * ray->step_y) == '1')
-			break;
+			break ;
 		x += xo;
 		y += ray->step_y;
 	}
-	if (dof <= 10)
+	if (dof <= 15)
 	{
 		ray->h_inter_x = x;
 		ray->h_inter_y = y;
-		ray->h_dist = sqrtf((originx - x) * (originx - x) \
-			+ (originy - y) * (originy - y));
+		ray->h_dist = sqrtf((px - x) * (px - x) + (py - y) * (py - y));
 	}
-	else
-		ray->h_dist = 1000000.0f;
 }
 
 static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
@@ -98,7 +94,7 @@ static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
 		ray->step_y = -1.0f;
 }
 
-static void update_ray(t_cubdata *cub, int idx)
+static void	update_ray(t_cubdata *cub, int idx)
 {
 	float	discard;
 
@@ -123,11 +119,11 @@ static void update_ray(t_cubdata *cub, int idx)
 
 void	update_rays(t_cubdata *cub)
 {
-	int 	i;
+	int	i;
 
-    i = 0;
-    while (i < CAMERA_W)
-    {
+	i = 0;
+	while (i < CAMERA_W)
+	{
 		prepare_ray(&cub->rays[i], cub->projplane_w, cub->player->angle, i);
 		v_collision(cub->player->x, cub->player->y, cub->map, &cub->rays[i]);
 		h_collision(cub->player->x, cub->player->y, cub->map, &cub->rays[i]);

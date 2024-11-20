@@ -6,33 +6,33 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 15:10:13 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:38:51 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-static void	draw_stripe(t_cubdata *cub, mlx_texture_t *tx, int line_h, int idx \
-	, float offset)
+static void	draw_stripe(t_cubdata *cub, int line_h, int idx, float offset)
 {
 	int	x;
 	int	y;
 	int	line_start;
-	int	line_end;
 	int	i;
 
 	line_start = CAMERA_H / 2 - line_h / 2;
-	line_end = CAMERA_H / 2 + line_h / 2;
-	x = (int)roundf(remapf(offset, 0.0f, 1.0f, 0.0f, tx->width - 1));
+	x = (int)roundf((offset - 0.0f) * \
+		(cub->rays[idx].wall_tx->width - 1) / 1.0f);
 	i = 0;
 	while (i < CAMERA_H)
 	{
 		if (i < line_start)
 			pixel_to_texture(cub->camera, idx, i, cub->ceiling_color);
-		else if (i < line_end)
+		else if (i < CAMERA_H / 2 + line_h / 2)
 		{
-			y = remap(i - line_start, 0, line_h - 1, 0, tx->height - 1);
-			pixel_to_texture(cub->camera, idx, i, get_color(tx, x, y));
+			y = remap(i - line_start, 0, line_h - 1, 0, \
+				cub->rays[idx].wall_tx->height - 1);
+			pixel_to_texture(cub->camera, idx, i, \
+				get_color(cub->rays[idx].wall_tx, x, y));
 		}
 		else
 			pixel_to_texture(cub->camera, idx, i, cub->floor_color);
@@ -61,8 +61,7 @@ static void	draw_walls(t_cubdata *cub)
 			dist = cub->rays[i].v_dist;
 		dist *= cosf(da);
 		line_height = ((float)CAMERA_H / dist) * 0.9f;
-		draw_stripe(cub, cub->rays[i].wall_tx, line_height, i, \
-			cub->rays[i].offset);
+		draw_stripe(cub, line_height, i, cub->rays[i].offset);
 		i++;
 	}
 }

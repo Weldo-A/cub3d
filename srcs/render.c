@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 17:38:51 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/22 01:12:27 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	draw_walls(t_cubdata *cub)
 void	render(t_cubdata *cubdata)
 {
 	update_minimap_texture(cubdata);
+	apply_minimap_mask(cubdata->mmap, cubdata->asset_list);
 	update_rays(cubdata);
 	draw_walls(cubdata);
 	merge_textures(cubdata->camera, cubdata->mmap, MMAP_X, MMAP_Y);

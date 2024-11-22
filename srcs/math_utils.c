@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 00:29:28 by weldo             #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:46 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/22 01:12:30 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ float	map_angle(int idx, float projplane_width, float face_angle)
 	return (angle);
 }
 
-float	remap(int n, int in_min, int in_max, int out_min, int out_max)
+float	remap(int64_t n, int64_t in_min, int64_t in_max, int64_t out_min, int64_t out_max)
 {
 	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
 }

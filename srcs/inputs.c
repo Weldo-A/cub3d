@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:32:25 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 17:29:41 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/22 03:06:42 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ static void	strafe_left(t_cubdata *cub)
 	float	x;
 	float	y;
 	float	new_angle;
-	char	map_element;
 
 	new_angle = cub->player->angle - M_PI_2;
 	x = cub->player->x + POS_INCREMENT * cosf(new_angle);
 	y = cub->player->y + POS_INCREMENT * sinf(new_angle);
-	map_element = map_element_at_pos(cub->map, x, y);
-	if (map_element == '0' || map_element == 'N')
+	if (is_pos_valid(cub->map, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;
@@ -35,13 +33,11 @@ static void	strafe_right(t_cubdata *cub)
 	float	x;
 	float	y;
 	float	new_angle;
-	char	map_element;
 
 	new_angle = cub->player->angle + M_PI_2;
 	x = cub->player->x + POS_INCREMENT * cosf(new_angle);
 	y = cub->player->y + POS_INCREMENT * sinf(new_angle);
-	map_element = map_element_at_pos(cub->map, x, y);
-	if (map_element == '0' || map_element == 'N')
+	if (is_pos_valid(cub->map, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;
@@ -52,12 +48,10 @@ static void	forward(t_cubdata *cub)
 {
 	float	x;
 	float	y;
-	char	map_element;
 
 	x = cub->player->x + POS_INCREMENT * cosf(cub->player->angle);
 	y = cub->player->y + POS_INCREMENT * sinf(cub->player->angle);
-	map_element = map_element_at_pos(cub->map, x, y);
-	if (map_element == '0' || map_element == 'N')
+	if (is_pos_valid(cub->map, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;
@@ -68,12 +62,10 @@ static void	backward(t_cubdata *cub)
 {
 	float	x;
 	float	y;
-	char	map_element;
 
 	x = cub->player->x - POS_INCREMENT * cosf(cub->player->angle);
 	y = cub->player->y - POS_INCREMENT * sinf(cub->player->angle);
-	map_element = map_element_at_pos(cub->map, x, y);
-	if (map_element == '0' || map_element == 'N')
+	if (is_pos_valid(cub->map, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;

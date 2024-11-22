@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 01:29:32 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:35 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:37:09 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ void	error_exit(error_code_t code)
 		print_err_msg("Error: Asset not found\n");
 	else if (code == ASSET_DELETE_ERR)
 		print_err_msg("Error: Could not delete asset\n");
+	else if (code == MMAP_MASK)
+		print_err_msg("Error: Minimap mask too small\n");
 	exit(code);
 }

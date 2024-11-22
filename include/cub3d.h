@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 17:20:39 by abernade         ###   ########.fr       */
+/*   Updated: 2024/11/22 03:07:42 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@
 # define FOV M_PI_3
 
 	// Colors //
-# define MMAP_COLOR_1 0x2E3B56FF
-# define MMAP_COLOR_0 0xFFFFFFFF
+# define MMAP_COLOR_1 (uint32_t)0x2E3B56FF
+# define MMAP_COLOR_0 (uint32_t)0xFFFFFFFF
+# define BLACK (uint32_t)0x000000FF
+# define WHITE (uint32_t)0xFFFFFFFF
 
 	// Player movement //
 # define ANGLE_INCREMENT 0.05f
 # define POS_INCREMENT 0.035f
 # define MOUSE_ANGLE_RATIO 0.0016f
+# define MIN_DIST_FROM_WALL 0.1f
 
 	// Texture names and paths //
 # define NORTH_TX "NO"
@@ -56,6 +59,8 @@
 # define EAST_TX "EA"
 # define MMAP_PLAYER_ICON "MMAP_PLAYER_ICON"
 # define MMAP_PLAYER_PATH "assets/circle1.png"
+# define MMAP_MASK_PATH "assets/mmap_mask.png"
+# define MMAP_MASK_NAME "mmap_mask"
 
 	// Wall types //
 # define WALL_N 0
@@ -87,7 +92,9 @@ typedef enum error_code
 	MALLOC_ERR,
 	ASSET_NAME_ERR,
 	ASSET_NOT_FOUND,
-	ASSET_DELETE_ERR
+	ASSET_DELETE_ERR,
+	MMAP_MASK,
+	ERR_MAX_VALUE
 }	error_code_t;
 
 /**
@@ -320,6 +327,14 @@ void	texture_to_image(mlx_texture_t *tx, mlx_image_t *img);
  */
 void	update_minimap_texture(t_cubdata *cub);
 
+/**
+ * @brief 
+ * 
+ * @param mmap 
+ * @param assets 
+ */
+void	apply_minimap_mask(mlx_texture_t *mmap, t_asset *assets);
+
 
 
 	// Input functions | inputs.c //
@@ -389,6 +404,16 @@ char	map_element_at_pos(t_map *map, float x, float y);
  */
 int	ft_strcmp(const char *s1, const char *s2);
 
+/**
+ * @brief Check is a position is a valid place for the player to be
+ * 
+ * @param map 
+ * @param x 
+ * @param y 
+ */
+bool	is_pos_valid(t_map *map, float x, float y);
+
+
 
 	// Math utils | math_utils.c //
 /**
@@ -421,7 +446,7 @@ float	remapf(float n, float in_min, float in_max, float out_min, float out_max);
  * @param out_max 
  * @return float 
  */
-float remap(int n, int in_min, int in_max, int out_min, int out_max);
+float	remap(int64_t n, int64_t in_min, int64_t in_max, int64_t out_min, int64_t out_max);
 
 /**
  * @brief Returns the angle of a ray. The index of the ray is mapped

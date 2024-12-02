@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 01:29:32 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/21 23:37:09 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:30:42 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	print_err_msg(const char *str)
 	write(2, str, ft_strlen(str));
 }
 
-void	error_exit(error_code_t code)
+void	error_exit(t_error_code code)
 {
 	if (code == MLX_ERR)
 		print_err_msg(mlx_strerror(mlx_errno));

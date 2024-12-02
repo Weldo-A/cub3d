@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:15:52 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 17:27:32 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:21:47 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	mouse_check(t_cubdata *cub)
 
 void	generic_hook(void	*cubdata)
 {
+	update_door_list(cubdata);
 	input_check(cubdata);
 	mouse_check(cubdata);
 	render(cubdata);

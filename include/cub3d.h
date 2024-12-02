@@ -6,22 +6,22 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/22 03:07:42 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/02 17:15:11 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <MLX42.h>
-#include <libft.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h> // TO BE DELETED
-#include <sys/time.h> // TO BE DELETED
+# include <MLX42.h>
+# include <libft.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
+# include <string.h> // TO BE DELETED
+# include <sys/time.h> // TO BE DELETED
 
-# define M_3PI_2 M_PI + M_PI_2
+# define M_3PI_2 4.712388980384690f
 # define M_2PI_3 2.09439510239319526264f
 # define M_2PI_3 2.09439510239319526264f
 # define M_PI_3 1.047197551f
@@ -57,6 +57,7 @@
 # define SOUTH_TX "SO" 
 # define WEST_TX "WE"
 # define EAST_TX "EA"
+# define DOOR_TX "DO"
 # define MMAP_PLAYER_ICON "MMAP_PLAYER_ICON"
 # define MMAP_PLAYER_PATH "assets/circle1.png"
 # define MMAP_MASK_PATH "assets/mmap_mask.png"
@@ -67,6 +68,10 @@
 # define WALL_S 1
 # define WALL_E 2
 # define WALL_W 3
+
+	// Doors
+# define DOOR_OPEN_FRAMES 30
+# define DOOR_CHAR 'D'
 
 // DEBUG SECTION, TO BE DELETED
 /*
@@ -94,8 +99,9 @@ typedef enum error_code
 	ASSET_NOT_FOUND,
 	ASSET_DELETE_ERR,
 	MMAP_MASK,
+	DOOR_RM,
 	ERR_MAX_VALUE
-}	error_code_t;
+}	t_error_code;
 
 /**
  * @param x x coordinate of the player
@@ -134,57 +140,54 @@ typedef struct	s_asset
 }	t_asset;
 
 /**
- * @param angle Angle of the ray in radians
- * @param inter_v_x X coordinate of the intersection with the closest vertical wall
- * @param inter_v_y Y coordinate of the intersection with the closest vertical wall
- * @param dist_v Distance from the closest vertical wall
- * @param inter_h_x X coordinate of the intersection with the closest horizontal wall
- * @param inter_h_y Y coordinate of the intersection with the closest horizontal wall
- * @param dist_h Distance from the closest horizontal wall
+ * @brief Ray data
  */
 typedef struct	s_ray
 {
-	float			angle;
-	float			slope;
-	float			ninv_slope;
-	float			step_x;
-	float			step_y;
-	float			v_inter_x;
-	float			v_inter_y;
-	float			v_dist;
-	float			h_inter_x;
-	float			h_inter_y;
-	float			h_dist;
-	float			offset;
-	mlx_texture_t	*wall_tx;
+	float			angle; // Angle of the ray in radians
+	float			slope; // Slope of the ray
+	float			ninv_slope; // negative inverse of the slope
+	float			step_x; // Horizonal step to increment when looking for vertical collision. 1, -1, or 0
+	float			step_y; // Vertical step to increment when looking for horizontal collision. 1, -1, or 0
+	float			v_inter_x; // X coordinate of the intersection with the closest vertical wall
+	float			v_inter_y; // Y coordinate of the intersection with the closest vertical wall
+	float			v_dist; // Distance from the closest vertical wall
+	float			h_inter_x; // X coordinate of the intersection with the closest horizontal wall
+	float			h_inter_y; // Y coordinate of the intersection with the closest horizontal wall
+	float			h_dist; // Distance from the closest horizontal wall
+	float			offset; // Value between 0 and 1 representing the position of the ray collision on the wall
+	mlx_texture_t	*wall_tx; // Texture to be displayed
 } t_ray;
 
 /**
- * Cub3d main data stucture
- *
- * @param mlx Main MLX handle
- * @param main_img MLX image of one game frame scaled at window's size
- * @param camera MLX texture in which is rendered the environment
- * @param mmap MLX texture of the minimap
- * @param player Contains infos about the player
- * @param map Contains infos about the map
- * @param floor_color, ceiling_color RGBA values used for the floor and ceiling
- * @param mmap_sqr_size Size in pixel of a square on the minimap texture
+ * @brief An active door
+ */
+typedef struct	s_door
+{
+	int				x;
+	int				y;
+	int				state;
+	struct s_door	*next;
+}	t_door;
+
+/**
+ * @brief Cub3d main data stucture
  */
 typedef struct	s_cubdata
 {
-	mlx_t			*mlx;
-	mlx_image_t		*main_img;
-	mlx_texture_t	*camera;
-	mlx_texture_t	*mmap;
-	t_asset			*asset_list;
-	t_player_data	*player;
-	t_map			*map;
-	t_ray			rays[CAMERA_W];
-	uint32_t		floor_color;
-	uint32_t		ceiling_color;
-	float			projplane_w;
-	uint8_t			mmap_sqr_size;
+	mlx_t			*mlx; // Main MLX handle
+	mlx_image_t		*main_img; // MLX image of one game frame scaled at window's size
+	mlx_texture_t	*camera; // MLX texture in which is rendered the environment
+	mlx_texture_t	*mmap; // MLX texture of the minimap
+	t_asset			*asset_list; // A list of asset textures
+	t_door			*active_doors; // List of doors either opened or in opening/closing animation
+	t_player_data	*player; // Contains infos about the player
+	t_map			*map; // Contains infos about the map
+	t_ray			rays[CAMERA_W]; // Rays data used for rendering
+	uint32_t		floor_color; // RGBA values used for the floor
+	uint32_t		ceiling_color; // RGBA values used for the ceiling
+	float			projplane_w; // Width of the projection plane used to space rays evenly
+	uint8_t			mmap_sqr_size; // Size in pixel of a square on the minimap texture
 }	t_cubdata;
 
 
@@ -259,7 +262,7 @@ void	update_rays(t_cubdata *cub);
  * 
  * @param code Error code
  */
-void	error_exit(error_code_t code);
+void	error_exit(t_error_code code);
 
 
 
@@ -290,7 +293,7 @@ void	pixel_to_texture(mlx_texture_t *tx, uint32_t x, uint32_t y, uint32_t color)
  * @param tx MLX texture to get a color from
  * @param x x coordinate
  * @param y y coordinate
- * @return uint32_t 
+ * @return uint32_t color value
  */
 uint32_t	get_color(const mlx_texture_t *tx, int x, int y);
 

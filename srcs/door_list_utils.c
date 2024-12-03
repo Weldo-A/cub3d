@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:38:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 03:31:33 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:50:45 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_door	*search_door(t_door *list, int x, int y)
 	return (NULL);
 }
 
-void	add_door_to_list(t_door **list, int x, int y)
+void	add_door_to_list(t_door **list, int x, int y, char type)
 {
 	t_door *new;
 
@@ -35,6 +35,7 @@ void	add_door_to_list(t_door **list, int x, int y)
 	new->next = NULL;
 	new->x = x;
 	new->y = y;
+	new->type = type;
 	new->state = 0;
 	if (*list == NULL)
 		*list = new;
@@ -85,6 +86,6 @@ bool	is_door_nearby(t_door *door, t_player_data *player)
 {
 	return (door->x >= player->x - 1 \
 		&& door->x <= player->x + 1 \
-		&& door->y >= player->y + 1 \
+		&& door->y >= player->y - 1 \
 		&& door->y <= player->y + 1);
 }

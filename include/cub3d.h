@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 03:00:23 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:39:54 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@
 
 	// Doors
 # define DOOR_OPEN_FRAMES 30
-# define DOOR_CHAR 'D'
+# define DOOR_CHAR_X 'D'
+# define DOOR_CHAR_Y 'd'
 
 // DEBUG SECTION, TO BE DELETED
 /*
@@ -79,14 +80,14 @@ String equivalent to a simple valid map
 
 1111111111
 1001010101
-1001010001
+1001D10001
 1100000001
 1000000111
 1000000001
 11100N0001
 1111111111
 */
-# define MAP_DEBUG "1111111111100101010110010D000111000000011000000111100000000111100000011111111111"
+# define MAP_DEBUG "111111111110010101011001D1000111000000011000000111100000000111100000011111111111"
 # define FLOOR_DEBUG 0x845207FF
 # define CEILING_DEBUG 0x2D2D2DFF
 # define GREEN 0x3DA600FF
@@ -100,6 +101,7 @@ typedef enum error_code
 	ASSET_DELETE_ERR,
 	MMAP_MASK,
 	DOOR_RM,
+	DOOR_WALK,
 	ERR_MAX_VALUE
 }	t_error_code;
 
@@ -167,6 +169,7 @@ typedef struct	s_door
 	int				x;
 	int				y;
 	int				state;
+	char			type;
 	struct s_door	*next;
 }	t_door;
 
@@ -292,8 +295,9 @@ bool	is_door_nearby(t_door *door, t_player_data *player);
  * @param list 
  * @param x 
  * @param y 
+ * @param type
  */
-void	add_door_to_list(t_door **list, int x, int y);
+void	add_door_to_list(t_door **list, int x, int y, char type);
 
 /**
  * @brief Remove a door from the list
@@ -466,11 +470,11 @@ int	ft_strcmp(const char *s1, const char *s2);
 /**
  * @brief Check is a position is a valid place for the player to be
  * 
- * @param map 
+ * @param cub 
  * @param x 
  * @param y 
  */
-bool	is_pos_valid(t_map *map, float x, float y);
+bool	is_pos_walkable(t_cubdata *cub, float x, float y);
 
 
 

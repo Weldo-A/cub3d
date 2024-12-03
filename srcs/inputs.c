@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:32:25 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/22 03:06:42 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:46:21 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	strafe_left(t_cubdata *cub)
 	new_angle = cub->player->angle - M_PI_2;
 	x = cub->player->x + POS_INCREMENT * cosf(new_angle);
 	y = cub->player->y + POS_INCREMENT * sinf(new_angle);
-	if (is_pos_valid(cub->map, x, y))
+	if (is_pos_walkable(cub, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;
@@ -37,7 +37,7 @@ static void	strafe_right(t_cubdata *cub)
 	new_angle = cub->player->angle + M_PI_2;
 	x = cub->player->x + POS_INCREMENT * cosf(new_angle);
 	y = cub->player->y + POS_INCREMENT * sinf(new_angle);
-	if (is_pos_valid(cub->map, x, y))
+	if (is_pos_walkable(cub, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;
@@ -51,7 +51,7 @@ static void	forward(t_cubdata *cub)
 
 	x = cub->player->x + POS_INCREMENT * cosf(cub->player->angle);
 	y = cub->player->y + POS_INCREMENT * sinf(cub->player->angle);
-	if (is_pos_valid(cub->map, x, y))
+	if (is_pos_walkable(cub, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;
@@ -65,7 +65,7 @@ static void	backward(t_cubdata *cub)
 
 	x = cub->player->x - POS_INCREMENT * cosf(cub->player->angle);
 	y = cub->player->y - POS_INCREMENT * sinf(cub->player->angle);
-	if (is_pos_valid(cub->map, x, y))
+	if (is_pos_walkable(cub, x, y))
 	{
 		cub->player->x = x;
 		cub->player->y = y;

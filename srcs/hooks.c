@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:15:52 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 03:32:42 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:45:37 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	generic_hook(void	*cubdata)
 			node = node->next;
 			i++;
 		}
-		block = 30;
+		block = 5;
 	}
 	if (block)
 		block--;

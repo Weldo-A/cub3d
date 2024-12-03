@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 01:29:32 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/02 14:30:42 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:07:05 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,9 @@ void	error_exit(t_error_code code)
 		print_err_msg("Error: Could not delete asset\n");
 	else if (code == MMAP_MASK)
 		print_err_msg("Error: Minimap mask too small\n");
+	else if (code == DOOR_RM)
+		print_err_msg("Error: Tried removing a door that doesn't exist\n");
+	else if (code == DOOR_WALK)
+		print_err_msg("Error: Tried walking on a door that doesn't exist\n");
 	exit(code);
 }

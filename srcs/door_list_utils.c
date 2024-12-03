@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:38:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/02 17:44:30 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 02:00:33 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_door	*search_door(t_door *list, int x, int y)
 {
-	while (*list)
+	while (list)
 	{
-		if (list->x = x && list->y == y)
-			return (*list);
+		if (list->x == x && list->y == y)
+			return (list);
 		list = list->next;
 	}
 	return (NULL);

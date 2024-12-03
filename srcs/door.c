@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:21:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/02 17:47:16 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 01:59:32 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	add_nearby_doors(t_cubdata *cub)
 		while (x <= cub->player->x + 1)
 		{
 			if (map_element_at_pos(cub->map, y, x) == DOOR_CHAR)
-				add_door_to_list(cub->active_doors);
+				add_door_to_list(&cub->active_doors, x, y);
 			x++;
 		}
 		y++;
@@ -55,7 +55,7 @@ static void	update_doors_state(t_cubdata *cub)
 	t_door			*door;
 
 	door = cub->active_doors;
-	while (*door)
+	while (door)
 	{
 		if (is_door_nearby(door, cub->player))
 		{
@@ -72,5 +72,5 @@ void	update_door_list(t_cubdata *cub)
 {
 	add_nearby_doors(cub);
 	remove_inactive_doors(cub);
-	update_doors_state(cub->active_doors);
+	update_doors_state(cub);
 }

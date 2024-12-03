@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/02 17:15:11 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 01:49:09 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,62 @@ void	render(t_cubdata *cubdata);
  * @param cub Cub3d main data structure
  */
 void	update_rays(t_cubdata *cub);
+
+
+
+	// Doors | door.c, door_utils.c //
+/**
+ * @brief Update the list of active doors and their state
+ * Remove doors from the list if not near the player and state = 0
+ * Add doors to the list if near the player
+ * Increment door's state if close to the player, decrement otherwise
+ * 
+ * @param cub 
+ */
+void	update_door_list(t_cubdata *cub);
+
+/**
+ * @brief Return the door at given coordinate, NULL if not in the list
+ * 
+ * @param list 
+ * @param x 
+ * @param y 
+ * @return t_door* 
+ */
+t_door	*search_door(t_door *list, int x, int y);
+
+/**
+ * @brief Returns true if the door is a square adjacent to the player
+ * 
+ * @param door 
+ * @param player 
+ * @return bool
+ */
+bool	is_door_nearby(t_door *door, t_player_data *player);
+
+/**
+ * @brief Add a door to the list
+ * 
+ * @param list 
+ * @param x 
+ * @param y 
+ */
+void	add_door_to_list(t_door **list, int x, int y);
+
+/**
+ * @brief Remove a door from the list
+ * 
+ * @param list 
+ * @param door 
+ */
+void	remove_door(t_door **list, t_door *door);
+
+/**
+ * @brief Clears and free the list of active doors
+ * 
+ * @param list 
+ */
+void	remove_all_doors(t_door **list);
 
 
 

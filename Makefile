@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: weldo <weldo@student.42.fr>                +#+  +:+       +#+         #
+#    By: abernade <abernade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/11/20 01:27:11 by weldo            ###   ########.fr        #
+#    Updated: 2024/12/03 01:06:33 by abernade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ SRC_FILES := main.c \
 			asset_handles.c \
 			cubdata.c \
 			debug.c \
+			door.c \
+			door_list_utils.c \
 			errors.c \
 			hooks.c \
 			inputs.c \

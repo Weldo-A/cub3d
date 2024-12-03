@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:38:37 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/21 18:40:17 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 03:02:54 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	cubdata_mlx_init(t_cubdata *cubdata)
 	load_asset(&cubdata->asset_list, MMAP_PLAYER_PATH, MMAP_PLAYER_ICON);
 	load_asset(&cubdata->asset_list, MMAP_MASK_PATH, MMAP_MASK_NAME);
 	cubdata->projplane_w = PROJPLANE_DIST * tanf(FOV / 2) * 2;
+	cubdata->active_doors = NULL;
 }
 
 static void	delete_all_assets(t_asset **lst)

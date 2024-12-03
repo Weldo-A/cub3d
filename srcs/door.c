@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:21:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 01:59:32 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 03:31:25 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	add_nearby_doors(t_cubdata *cub)
 		x = cub->player->x - 1;
 		while (x <= cub->player->x + 1)
 		{
-			if (map_element_at_pos(cub->map, y, x) == DOOR_CHAR)
+			if (map_element_at_pos(cub->map, x, y) == DOOR_CHAR)
 				add_door_to_list(&cub->active_doors, x, y);
 			x++;
 		}
@@ -34,19 +34,21 @@ static void	add_nearby_doors(t_cubdata *cub)
 static void	remove_inactive_doors(t_cubdata *cub)
 {
 	t_door	*door;
+	t_door	*next;
 
 	door = cub->active_doors;
 	while (door)
 	{
+		next = door->next;
 		if (door->state <= 0)
-			if (door->x < cub->player->x - 1 \
-				|| door->x > cub->player->x + 1 \
-				|| door->y < cub->player->y - 1 \
-				|| door->y > cub->player->y + 1)
+			if (door->x < (int)cub->player->x - 1 \
+				|| door->x > (int)cub->player->x + 1 \
+				|| door->y < (int)cub->player->y - 1 \
+				|| door->y > (int)cub->player->y + 1)
 			{
 				remove_door(&cub->active_doors, door);
 			}
-		door = door->next;
+		door = next;
 	}
 }
 

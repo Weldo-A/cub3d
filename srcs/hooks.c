@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:15:52 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/02 15:21:47 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 03:32:42 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	mouse_check(t_cubdata *cub)
 
 	mlx_get_mouse_pos(cub->mlx, &x, &y);
 	(void)y;
-	if (changes < 2 && oldx != x)
+	if (changes < 3 && oldx != x)
 		changes++;
 	else
 		cub->player->angle += (x - oldx) * MOUSE_ANGLE_RATIO;
@@ -44,7 +44,31 @@ static void	mouse_check(t_cubdata *cub)
 void	generic_hook(void	*cubdata)
 {
 	update_door_list(cubdata);
+
+
+	static int block = 0;
+	if (mlx_is_key_down(((t_cubdata *)cubdata)->mlx, MLX_KEY_P) && !block)
+	{
+		printf("\nDoor list dump\n");
+		t_door	*node;
+		int		i = 0;
+		node = ((t_cubdata *)cubdata)->active_doors;
+		if (!node)
+			printf("empty list\n");
+		while (node)
+		{
+			printf("\nNODE %d\tx: %d\ty: %d\tstate: %d\n", i, node->x, node->y, node->state);
+			node = node->next;
+			i++;
+		}
+		block = 30;
+	}
+	if (block)
+		block--;
+	
+	
 	input_check(cubdata);
 	mouse_check(cubdata);
+	update_rays(cubdata);
 	render(cubdata);
 }

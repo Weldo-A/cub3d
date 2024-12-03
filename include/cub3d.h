@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 01:49:09 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 03:00:23 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ String equivalent to a simple valid map
 11100N0001
 1111111111
 */
-# define MAP_DEBUG "11111111111001010101100101000111000000011000000111100000000111100000011111111111"
+# define MAP_DEBUG "1111111111100101010110010D000111000000011000000111100000000111100000011111111111"
 # define FLOOR_DEBUG 0x845207FF
 # define CEILING_DEBUG 0x2D2D2DFF
 # define GREEN 0x3DA600FF

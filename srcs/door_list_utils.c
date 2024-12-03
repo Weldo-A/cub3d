@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:38:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 02:00:33 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/03 03:31:33 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	remove_door(t_door **list, t_door *door)
 	if (!node)
 		error_exit(DOOR_RM);
 	if (!prev)
-		*list = node;
+		*list = node->next;
 	else
 		prev->next = node->next;
 	free(node);

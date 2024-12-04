@@ -6,13 +6,13 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/04 01:56:25 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/04 03:55:57 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-static void	v_collision(t_player_data *p, t_map *map, t_ray *ray)
+static void	v_collision(t_player *p, t_map *map, t_ray *ray)
 {
 	t_point	pos;
 	float	yo;
@@ -21,8 +21,7 @@ static void	v_collision(t_player_data *p, t_map *map, t_ray *ray)
 	ray->v_dist = 1000000.f;
 	if (ray->slope == INFINITY)
 		return ;
-	pos.x = floorf(p->x) + (ray->step_x > 0.f);
-	pos.y = -ray->slope * (p->x - pos.x) + p->y;
+	ray_first_step_v(&pos, p, ray);
 	yo = ray->step_x * ray->slope;
 	dof = 0;
 	while (dof++ < 30)
@@ -36,7 +35,7 @@ static void	v_collision(t_player_data *p, t_map *map, t_ray *ray)
 		save_v_inter(ray, &pos, p);
 }
 
-static void	h_collision(t_player_data *p, t_map *map, t_ray *ray)
+static void	h_collision(t_player *p, t_map *map, t_ray *ray)
 {
 	t_point	pos;
 	float	xo;
@@ -45,8 +44,7 @@ static void	h_collision(t_player_data *p, t_map *map, t_ray *ray)
 	ray->h_dist = 1000000.f;
 	if (ray->ninv_slope == INFINITY)
 		return ;
-	pos.y = floorf(p->y) + (ray->step_y > 0.f);
-	pos.x = p->x + ray->ninv_slope * (p->y - pos.y);
+	ray_first_step_h(&pos, p, ray);
 	xo = -ray->step_y * ray->ninv_slope;
 	dof = 0;
 	while (dof++ < 30)

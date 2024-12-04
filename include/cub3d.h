@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/04 01:51:23 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/04 03:55:08 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct	s_player_data
 	float	x;
 	float	y;
 	float	angle;
-}	t_player_data;
+}	t_player;
 
 /**
  * @param map_str String format of the map
@@ -190,7 +190,7 @@ typedef struct	s_cubdata
 	mlx_texture_t	*mmap; // MLX texture of the minimap
 	t_asset			*asset_list; // A list of asset textures
 	t_door			*active_doors; // List of doors either opened or in opening/closing animation
-	t_player_data	*player; // Contains infos about the player
+	t_player	*player; // Contains infos about the player
 	t_map			*map; // Contains infos about the map
 	t_ray			rays[CAMERA_W]; // Rays data used for rendering
 	uint32_t		floor_color; // RGBA values used for the floor
@@ -272,7 +272,7 @@ void	update_rays(t_cubdata *cub);
  * @param y 
  * @param p 
  */
-void	save_v_inter(t_ray *ray, t_point *point, t_player_data *p);
+void	save_v_inter(t_ray *ray, t_point *point, t_player *p);
 
 /**
  * @brief Save the point of intersection with a horizontal wall
@@ -283,7 +283,32 @@ void	save_v_inter(t_ray *ray, t_point *point, t_player_data *p);
  * @param y 
  * @param p 
  */
-void	save_h_inter(t_ray *ray, t_point *point, t_player_data *p);
+void	save_h_inter(t_ray *ray, t_point *point, t_player *p);
+
+/**
+ * @brief Write to the t_point structure the coordinates of the first
+ * intersection between the ray and a vertical line which y coordinate
+ * is a multiple of 0.5 (half block steps)
+ * 
+ * @param point Struct to write to
+ * @param p Player position data
+ * @param map Map data
+ * @param ray Ray data
+ */
+void	ray_first_step_v(t_point *point, t_player *p, t_ray *ray);
+
+/**
+ * @brief Write to the t_point structure the coordinates of the first
+ * intersection between the ray and a horizontal line which x coordinate
+ * is a multiple of 0.5 (half block steps)
+ * 
+ * @param point Struct to write to
+ * @param p Player position data
+ * @param map Map data
+ * @param ray Ray data
+ */
+void	ray_first_step_h(t_point *point, t_player *p, t_ray *ray);
+
 
 
 	// Doors | door.c, door_utils.c //
@@ -314,7 +339,7 @@ t_door	*search_door(t_door *list, int x, int y);
  * @param player 
  * @return bool
  */
-bool	is_door_nearby(t_door *door, t_player_data *player);
+bool	is_door_nearby(t_door *door, t_player *player);
 
 /**
  * @brief Add a door to the list

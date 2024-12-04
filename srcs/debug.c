@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 03:02:03 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:06:39 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cubdata	*debug_data_init(void)
 	cubdata->map->height = 8;
 	cubdata->floor_color = FLOOR_DEBUG;
 	cubdata->ceiling_color = CEILING_DEBUG;
-	cubdata->player = malloc(sizeof(t_player_data));
+	cubdata->player = malloc(sizeof(t_player));
 	cubdata->player->x = 5.5f;
 	cubdata->player->y = 6.5f;
 	cubdata->player->angle = M_3PI_2;

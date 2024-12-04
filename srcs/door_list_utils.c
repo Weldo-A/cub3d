@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:38:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 19:50:45 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:06:39 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	remove_all_doors(t_door **list)
 	*list = NULL;
 }
 
-bool	is_door_nearby(t_door *door, t_player_data *player)
+bool	is_door_nearby(t_door *door, t_player *player)
 {
 	return (door->x >= player->x - 1 \
 		&& door->x <= player->x + 1 \

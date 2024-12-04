@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 19:39:54 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/04 01:51:23 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ typedef enum error_code
 	DOOR_WALK,
 	ERR_MAX_VALUE
 }	t_error_code;
+
+typedef struct	s_point
+{
+	float	x;
+	float	y;
+}	t_point;
 
 /**
  * @param x x coordinate of the player
@@ -249,7 +255,7 @@ void	render(t_cubdata *cubdata);
 
 
 
-	// Rays calculations | ray_utils.c //
+	// Rays calculations | rays.c, ray_utils.c //
 /**
  * @brief Update rays data
  * 
@@ -257,6 +263,27 @@ void	render(t_cubdata *cubdata);
  */
 void	update_rays(t_cubdata *cub);
 
+/**
+ * @brief Save the point of intersection with a vertical wall
+ * in the ray structure and calculate the distance to origin
+ * 
+ * @param ray 
+ * @param x 
+ * @param y 
+ * @param p 
+ */
+void	save_v_inter(t_ray *ray, t_point *point, t_player_data *p);
+
+/**
+ * @brief Save the point of intersection with a horizontal wall
+ * in the ray structure and calculate the distance to origin
+ * 
+ * @param ray 
+ * @param x 
+ * @param y 
+ * @param p 
+ */
+void	save_h_inter(t_ray *ray, t_point *point, t_player_data *p);
 
 
 	// Doors | door.c, door_utils.c //

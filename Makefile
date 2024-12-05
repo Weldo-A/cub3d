@@ -6,7 +6,7 @@
 #    By: abernade <abernade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/12/04 00:38:40 by abernade         ###   ########.fr        #
+#    Updated: 2024/12/05 04:47:30 by abernade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC_FILES := main.c \
 			minimap.c \
 			math_utils.c \
 			rays.c \
+			ray_collision.c \
 			ray_utils.c \
 			render.c \
 			texture_utils.c \

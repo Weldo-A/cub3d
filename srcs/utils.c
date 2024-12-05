@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 19:43:12 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:04:49 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static bool	is_door_pos_walkable(t_cubdata *cub, char door_type, float x, float 
 		fract = modff(y, &discard);
 	else
 		fract = modff(x, &discard);
-	return (door->state == 30 || fract > 0.5f + MIN_DIST_FROM_WALL \
+	return (door->state == DOOR_OPEN_FRAMES \
+		|| fract > 0.5f + MIN_DIST_FROM_WALL \
 		|| fract < 0.5f - MIN_DIST_FROM_WALL);
 }
 

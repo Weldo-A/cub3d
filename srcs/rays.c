@@ -6,57 +6,11 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/04 03:55:57 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:13:35 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-static void	v_collision(t_player *p, t_map *map, t_ray *ray)
-{
-	t_point	pos;
-	float	yo;
-	int		dof;
-
-	ray->v_dist = 1000000.f;
-	if (ray->slope == INFINITY)
-		return ;
-	ray_first_step_v(&pos, p, ray);
-	yo = ray->step_x * ray->slope;
-	dof = 0;
-	while (dof++ < 30)
-	{
-		if (map_element_at_pos(map, pos.x + 0.01f * ray->step_x, pos.y) == '1')
-			break ;
-		pos.y += yo;
-		pos.x += ray->step_x;
-	}
-	if (dof <= 30)
-		save_v_inter(ray, &pos, p);
-}
-
-static void	h_collision(t_player *p, t_map *map, t_ray *ray)
-{
-	t_point	pos;
-	float	xo;
-	int		dof;
-
-	ray->h_dist = 1000000.f;
-	if (ray->ninv_slope == INFINITY)
-		return ;
-	ray_first_step_h(&pos, p, ray);
-	xo = -ray->step_y * ray->ninv_slope;
-	dof = 0;
-	while (dof++ < 30)
-	{
-		if (map_element_at_pos(map, pos.x, pos.y + 0.01f * ray->step_y) == '1')
-			break ;
-		pos.x += xo;
-		pos.y += ray->step_y;
-	}
-	if (dof <= 30)
-		save_h_inter(ray, &pos, p);
-}
 
 static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
 {
@@ -73,20 +27,44 @@ static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
 	else
 		ray->ninv_slope = 0.0f;
 	if (ray->angle < M_PI_2 || ray->angle > M_3PI_2)
-		ray->step_x = 1.0f;
+		ray->step_x = 0.5f;
 	else
-		ray->step_x = -1.0f;
+		ray->step_x = -0.5f;
 	if (ray->angle < M_PI)
-		ray->step_y = 1.0f;
+		ray->step_y = 0.5f;
 	else
-		ray->step_y = -1.0f;
+		ray->step_y = -0.5f;
 }
 
-static void	update_ray(t_cubdata *cub, int idx)
+static void	update_ray_door(t_cubdata *cub, int idx, char ray_type)
+{
+	t_door	*door;
+	float	door_state;
+	float	discard;
+
+	cub->rays[idx].wall_tx = get_asset(cub->asset_list, DOOR_TX);
+	door = search_door(cub->active_doors, cub->rays[idx].v_inter_x, \
+		cub->rays[idx].v_inter_y);
+	if (!door)
+		door_state = 0;
+	else
+		door_state = door->state;
+	if (ray_type == 'v')
+		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard) \
+			+ door_state/ DOOR_OPEN_FRAMES;
+	else
+		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_x, &discard) \
+			+ door_state / DOOR_OPEN_FRAMES;
+	if (cub->rays[idx].offset > 1.f)
+		cub->rays[idx].offset = 1.f;
+	(void)discard;
+}
+
+static void	update_ray_wall(t_cubdata *cub, int idx, char ray_type)
 {
 	float	discard;
 
-	if (cub->rays[idx].v_dist < cub->rays[idx].h_dist)
+	if (ray_type == 'v')
 	{
 		if (cub->rays[idx].angle > M_PI_2 && cub->rays[idx].angle < M_3PI_2)
 			cub->rays[idx].wall_tx = get_asset(cub->asset_list, EAST_TX);
@@ -105,6 +83,36 @@ static void	update_ray(t_cubdata *cub, int idx)
 	(void)discard;
 }
 
+static void	update_ray(t_cubdata *cub, int idx)
+{
+	float	discard;
+
+	if (cub->rays[idx].v_dist > 1000.f && cub->rays[idx].h_dist > 1000.f)
+	{
+		cub->rays[idx].ray_hit = false;
+		return ;
+	}
+	else
+		cub->rays[idx].ray_hit = true;
+	if (cub->rays[idx].v_dist < cub->rays[idx].h_dist)
+	{
+		if (map_element_at_pos(cub->map, cub->rays[idx].v_inter_x, \
+			cub->rays[idx].v_inter_y) == DOOR_CHAR_Y)
+			update_ray_door(cub, idx, 'v');
+		else
+			update_ray_wall(cub, idx, 'v');
+	}
+	else
+	{
+		if (map_element_at_pos(cub->map, cub->rays[idx].h_inter_x, \
+			cub->rays[idx].h_inter_y) == DOOR_CHAR_X)
+			update_ray_door(cub, idx, 'h');
+		else
+			update_ray_wall(cub, idx, 'h');
+	}
+	(void)discard;
+}
+
 void	update_rays(t_cubdata *cub)
 {
 	int	i;
@@ -113,8 +121,8 @@ void	update_rays(t_cubdata *cub)
 	while (i < CAMERA_W)
 	{
 		prepare_ray(&cub->rays[i], cub->projplane_w, cub->player->angle, i);
-		v_collision(cub->player, cub->map, &cub->rays[i]);
-		h_collision(cub->player, cub->map, &cub->rays[i]);
+		v_collision(cub, i);
+		h_collision(cub, i);
 		update_ray(cub, i);
 		i++;
 	}

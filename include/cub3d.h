@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/04 03:55:08 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:03:25 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@
 # define WALL_W 3
 
 	// Doors
-# define DOOR_OPEN_FRAMES 30
+# define DOOR_OPEN_FRAMES 120
 # define DOOR_CHAR_X 'D'
 # define DOOR_CHAR_Y 'd'
 
@@ -116,7 +116,7 @@ typedef struct	s_point
  * @param y y coordinate of the player
  * @param angle Orientation of the player in radiant
  */
-typedef struct	s_player_data
+typedef struct	s_player
 {
 	float	x;
 	float	y;
@@ -165,6 +165,7 @@ typedef struct	s_ray
 	float			h_dist; // Distance from the closest horizontal wall
 	float			offset; // Value between 0 and 1 representing the position of the ray collision on the wall
 	mlx_texture_t	*wall_tx; // Texture to be displayed
+	bool			ray_hit; // Whether the ray hit an obstacle
 } t_ray;
 
 /**
@@ -190,7 +191,7 @@ typedef struct	s_cubdata
 	mlx_texture_t	*mmap; // MLX texture of the minimap
 	t_asset			*asset_list; // A list of asset textures
 	t_door			*active_doors; // List of doors either opened or in opening/closing animation
-	t_player	*player; // Contains infos about the player
+	t_player		*player; // Contains infos about the player
 	t_map			*map; // Contains infos about the map
 	t_ray			rays[CAMERA_W]; // Rays data used for rendering
 	uint32_t		floor_color; // RGBA values used for the floor
@@ -289,25 +290,47 @@ void	save_h_inter(t_ray *ray, t_point *point, t_player *p);
  * @brief Write to the t_point structure the coordinates of the first
  * intersection between the ray and a vertical line which y coordinate
  * is a multiple of 0.5 (half block steps)
+ * Returns true if the point x coordinate fractional part is 0.5
  * 
  * @param point Struct to write to
  * @param p Player position data
  * @param map Map data
  * @param ray Ray data
+ * @return bool
  */
-void	ray_first_step_v(t_point *point, t_player *p, t_ray *ray);
+bool	ray_first_step_v(t_point *point, t_player *p, t_ray *ray);
 
 /**
  * @brief Write to the t_point structure the coordinates of the first
  * intersection between the ray and a horizontal line which x coordinate
  * is a multiple of 0.5 (half block steps)
+ * Returns true if the point y coordinate fractional part is 0.5
  * 
  * @param point Struct to write to
  * @param p Player position data
  * @param map Map data
  * @param ray Ray data
+ * @return bool
  */
-void	ray_first_step_h(t_point *point, t_player *p, t_ray *ray);
+bool	ray_first_step_h(t_point *point, t_player *p, t_ray *ray);
+
+/**
+ * @brief Check for collison between the ray and vertical objects
+ * and save the coordinates of the point of collision
+ * 
+ * @param cub 
+ * @param idx 
+ */
+void	v_collision(t_cubdata *cub, int idx);
+
+/**
+ * @brief Check for collison between the ray and horizontal objects
+ * and save the coordinates of the point of collision
+ * 
+ * @param cub 
+ * @param idx 
+ */
+void	h_collision(t_cubdata *cub, int idx);
 
 
 

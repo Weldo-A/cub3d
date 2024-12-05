@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/04 02:06:39 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:18:29 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_cubdata	*debug_data_init(void)
 	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", WEST_TX);
 	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", EAST_TX);
 	load_asset(&cubdata->asset_list, "assets/planks.png", DOOR_TX);
+	ft_bzero(cubdata->rays, sizeof(t_ray) * CAMERA_W);
 	return (cubdata);
 }
 

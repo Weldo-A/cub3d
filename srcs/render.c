@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/10 13:28:10 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:58:09 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	draw_walls(t_cubdata *cub)
 	i = 0;
 	while (i < CAMERA_W)
 	{
+		if (cub->rays[i].ray_hit)
 		da = cub->player->angle - cub->rays[i].angle;
 		if (da < 0)
 			da += M_PI * 2;
@@ -60,7 +61,7 @@ static void	draw_walls(t_cubdata *cub)
 		else
 			dist = cub->rays[i].v_dist;
 		dist *= cosf(da);
-		line_height = ((float)CAMERA_H / dist) * 0.9f;
+		line_height = (CAMERA_H / dist) * 0.9f;
 		draw_stripe(cub, line_height, i, cub->rays[i].offset);
 		i++;
 	}

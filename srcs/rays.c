@@ -6,13 +6,11 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/10 15:38:52 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:02:15 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-extern int g_debug;
 
 static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
 {
@@ -56,7 +54,8 @@ static void	update_ray_door(t_cubdata *cub, int idx, char ray_type)
 	else
 		door_state = door->state;
 	if (ray_type == 'v')
-		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard);
+		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard) \
+			- ((float)door_state / DOOR_OPEN_FRAMES);
 	else
 		cub->rays[idx].offset = modff(cub->rays[idx].h_inter_x, &discard) \
 			- ((float)door_state / DOOR_OPEN_FRAMES);

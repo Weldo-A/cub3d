@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 15:18:29 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:44:17 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cubdata	*debug_data_init(void)
 	cubdata->map = malloc(sizeof(t_map));
 	cubdata->map->map_str = malloc(sizeof(char) * (ft_strlen(MAP_DEBUG) + 1));
 	strcpy(cubdata->map->map_str, MAP_DEBUG);
-	cubdata->map->width = 10;
+	cubdata->map->width = 14;
 	cubdata->map->height = 8;
 	cubdata->floor_color = FLOOR_DEBUG;
 	cubdata->ceiling_color = CEILING_DEBUG;
@@ -34,7 +34,7 @@ t_cubdata	*debug_data_init(void)
 	load_asset(&cubdata->asset_list, "assets/Brickwall5_Texture.png", SOUTH_TX);
 	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", WEST_TX);
 	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", EAST_TX);
-	load_asset(&cubdata->asset_list, "assets/planks.png", DOOR_TX);
+	load_asset(&cubdata->asset_list, "assets/Brick_Texture.png", DOOR_TX);
 	ft_bzero(cubdata->rays, sizeof(t_ray) * CAMERA_W);
 	return (cubdata);
 }
@@ -134,23 +134,15 @@ void	draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx, int color)
 	else if (absolute(x1 - x0) > absolute(y1 - y0))
 	{
 		if (x1 > x0)
-		{
 			line_low(x0, y0, x1, y1, tx, color);
-		}
 		else
-		{
 			line_low(x1, y1, x0, y0, tx, color);
-		}
 	}
 	else
 	{
 		if (y1 > y0)
-		{
 			line_high(x0, y0, x1, y1, tx, color);
-		}
 		else
-		{
 			line_high(x1, y1, x0, y0, tx, color);
-		}
 	}
 }

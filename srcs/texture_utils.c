@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 03:51:08 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 15:23:10 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:46:52 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ uint32_t	get_color(const mlx_texture_t *tx, int x, int y)
 	int			idx;
 
 	idx = (y * tx->width + x) * 4;
-	if ((uint32_t)idx >= (tx->width * tx->height) * 4)
-	{
-		printf("\nx: %d\ty: %d\twidth: %d\theight: %d\n", x, y, tx->width, tx->height);
-	}
 	color = ((uint32_t)tx->pixels[idx++] << 24);
 	color |= ((uint32_t)tx->pixels[idx++] << 16);
 	color |= ((uint32_t)tx->pixels[idx++] << 8);

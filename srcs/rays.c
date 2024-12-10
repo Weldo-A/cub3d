@@ -6,11 +6,13 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 17:13:35 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:38:52 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+extern int g_debug;
 
 static void	prepare_ray(t_ray *ray, float projplane_w, float p_angle, int i)
 {
@@ -43,20 +45,21 @@ static void	update_ray_door(t_cubdata *cub, int idx, char ray_type)
 	float	discard;
 
 	cub->rays[idx].wall_tx = get_asset(cub->asset_list, DOOR_TX);
-	door = search_door(cub->active_doors, cub->rays[idx].v_inter_x, \
-		cub->rays[idx].v_inter_y);
+	if (ray_type == 'v')
+		door = search_door(cub->active_doors, cub->rays[idx].v_inter_x, \
+			cub->rays[idx].v_inter_y);
+	else
+		door = search_door(cub->active_doors, cub->rays[idx].h_inter_x, \
+			cub->rays[idx].h_inter_y);
 	if (!door)
 		door_state = 0;
 	else
 		door_state = door->state;
 	if (ray_type == 'v')
-		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard) \
-			+ door_state/ DOOR_OPEN_FRAMES;
+		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard);
 	else
-		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_x, &discard) \
-			+ door_state / DOOR_OPEN_FRAMES;
-	if (cub->rays[idx].offset > 1.f)
-		cub->rays[idx].offset = 1.f;
+		cub->rays[idx].offset = modff(cub->rays[idx].h_inter_x, &discard) \
+			- ((float)door_state / DOOR_OPEN_FRAMES);
 	(void)discard;
 }
 
@@ -88,27 +91,26 @@ static void	update_ray(t_cubdata *cub, int idx)
 	float	discard;
 
 	if (cub->rays[idx].v_dist > 1000.f && cub->rays[idx].h_dist > 1000.f)
-	{
 		cub->rays[idx].ray_hit = false;
-		return ;
-	}
 	else
+	{
 		cub->rays[idx].ray_hit = true;
-	if (cub->rays[idx].v_dist < cub->rays[idx].h_dist)
-	{
-		if (map_element_at_pos(cub->map, cub->rays[idx].v_inter_x, \
-			cub->rays[idx].v_inter_y) == DOOR_CHAR_Y)
-			update_ray_door(cub, idx, 'v');
+		if (cub->rays[idx].v_dist < cub->rays[idx].h_dist)
+		{
+			if (map_element_at_pos(cub->map, cub->rays[idx].v_inter_x, \
+				cub->rays[idx].v_inter_y) == DOOR_CHAR_Y)
+				update_ray_door(cub, idx, 'v');
+			else
+				update_ray_wall(cub, idx, 'v');
+		}
 		else
-			update_ray_wall(cub, idx, 'v');
-	}
-	else
-	{
-		if (map_element_at_pos(cub->map, cub->rays[idx].h_inter_x, \
-			cub->rays[idx].h_inter_y) == DOOR_CHAR_X)
-			update_ray_door(cub, idx, 'h');
-		else
-			update_ray_wall(cub, idx, 'h');
+		{
+			if (map_element_at_pos(cub->map, cub->rays[idx].h_inter_x, \
+				cub->rays[idx].h_inter_y) == DOOR_CHAR_X)
+				update_ray_door(cub, idx, 'h');
+			else
+				update_ray_wall(cub, idx, 'h');
+		}
 	}
 	(void)discard;
 }

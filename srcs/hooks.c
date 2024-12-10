@@ -6,11 +6,13 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:15:52 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 15:21:30 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:46:20 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+extern int g_debug;
 
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
@@ -43,30 +45,21 @@ static void	mouse_check(t_cubdata *cub)
 
 void	generic_hook(void	*cubdata)
 {
-	update_door_list(cubdata);
+	static int debug_cd = 0;
 
-
-	static int block = 0;
-	if (mlx_is_key_down(((t_cubdata *)cubdata)->mlx, MLX_KEY_P) && !block)
+	if (g_debug)
 	{
-		printf("\nDoor list dump\n");
-		t_door	*node;
-		int		i = 0;
-		node = ((t_cubdata *)cubdata)->active_doors;
-		if (!node)
-			printf("empty list\n");
-		while (node)
-		{
-			printf("\nNODE %d\tx: %d\ty: %d\tstate: %d\n", i, node->x, node->y, node->state);
-			node = node->next;
-			i++;
-		}
-		block = 5;
+		debug_cd = 30;
+		g_debug = 0;
 	}
-	if (block)
-		block--;
+
+	if (mlx_is_key_down(((t_cubdata *)cubdata)->mlx, MLX_KEY_P) && !debug_cd)
+		g_debug = 1;
+
+	if (debug_cd)
+		debug_cd--;
 	
-	
+	update_door_list(cubdata);
 	input_check(cubdata);
 	mouse_check(cubdata);
 	update_rays(cubdata);

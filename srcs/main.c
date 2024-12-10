@@ -6,11 +6,13 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:36:03 by abernade          #+#    #+#             */
-/*   Updated: 2024/11/20 16:34:02 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:40:26 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+int	g_debug = 0;
 
 int	main(int ac, char **av)
 {

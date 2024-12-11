@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/10 15:44:17 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:16:18 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ t_cubdata	*debug_data_init(void)
 	cubdata->player->angle = M_3PI_2;
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
 	cubdata->asset_list = NULL;
-	load_asset(&cubdata->asset_list, "assets/Brickwall6_Texture.png", NORTH_TX);
-	load_asset(&cubdata->asset_list, "assets/Brickwall5_Texture.png", SOUTH_TX);
-	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", WEST_TX);
-	load_asset(&cubdata->asset_list, "assets/Brickwall4_Texture.png", EAST_TX);
+	load_asset(&cubdata->asset_list, "assets/bluestone.png", NORTH_TX);
+	load_asset(&cubdata->asset_list, "assets/mossy.png", SOUTH_TX);
+	load_asset(&cubdata->asset_list, "assets/bluestone.png", WEST_TX);
+	load_asset(&cubdata->asset_list, "assets/greystone.png", EAST_TX);
 	load_asset(&cubdata->asset_list, "assets/Brick_Texture.png", DOOR_TX);
 	ft_bzero(cubdata->rays, sizeof(t_ray) * CAMERA_W);
 	return (cubdata);

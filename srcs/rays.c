@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:00:54 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/10 17:02:15 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:16:51 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@ static void	update_ray_wall(t_cubdata *cub, int idx, char ray_type)
 	if (ray_type == 'v')
 	{
 		if (cub->rays[idx].angle > M_PI_2 && cub->rays[idx].angle < M_3PI_2)
-			cub->rays[idx].wall_tx = get_asset(cub->asset_list, EAST_TX);
-		else
 			cub->rays[idx].wall_tx = get_asset(cub->asset_list, WEST_TX);
+		else
+			cub->rays[idx].wall_tx = get_asset(cub->asset_list, EAST_TX);
 		cub->rays[idx].offset = modff(cub->rays[idx].v_inter_y, &discard);
 	}
 	else
 	{
 		if (cub->rays[idx].angle < M_PI)
-			cub->rays[idx].wall_tx = get_asset(cub->asset_list, NORTH_TX);
-		else
 			cub->rays[idx].wall_tx = get_asset(cub->asset_list, SOUTH_TX);
+		else
+			cub->rays[idx].wall_tx = get_asset(cub->asset_list, NORTH_TX);
 		cub->rays[idx].offset = modff(cub->rays[idx].h_inter_x, &discard);
 	}
 	(void)discard;

@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:32:25 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/03 19:46:21 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:26:34 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ static void	strafe_left(t_cubdata *cub)
 		cub->player->x = x;
 		cub->player->y = y;
 	}
+	else if (is_pos_walkable(cub, cub->player->x, y))
+		cub->player->y = y;
+	else if (is_pos_walkable(cub, x, cub->player->y))
+		cub->player->x = x;
 }
 
 static void	strafe_right(t_cubdata *cub)
@@ -42,6 +46,10 @@ static void	strafe_right(t_cubdata *cub)
 		cub->player->x = x;
 		cub->player->y = y;
 	}
+	else if (is_pos_walkable(cub, cub->player->x, y))
+		cub->player->y = y;
+	else if (is_pos_walkable(cub, x, cub->player->y))
+		cub->player->x = x;
 }
 
 static void	forward(t_cubdata *cub)
@@ -56,6 +64,10 @@ static void	forward(t_cubdata *cub)
 		cub->player->x = x;
 		cub->player->y = y;
 	}
+	else if (is_pos_walkable(cub, cub->player->x, y))
+		cub->player->y = y;
+	else if (is_pos_walkable(cub, x, cub->player->y))
+		cub->player->x = x;
 }
 
 static void	backward(t_cubdata *cub)
@@ -70,6 +82,10 @@ static void	backward(t_cubdata *cub)
 		cub->player->x = x;
 		cub->player->y = y;
 	}
+	else if (is_pos_walkable(cub, cub->player->x, y))
+		cub->player->y = y;
+	else if (is_pos_walkable(cub, x, cub->player->y))
+		cub->player->x = x;
 }
 
 void	input_check(t_cubdata *cub)

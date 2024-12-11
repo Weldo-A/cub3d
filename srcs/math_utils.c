@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 00:29:28 by weldo             #+#    #+#             */
-/*   Updated: 2024/11/22 01:12:30 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:00:55 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ float	remap(int64_t n, int64_t in_min, int64_t in_max, int64_t out_min, int64_t 
 	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
 }
 
-float	remapf(float n, float in_min, float in_max, \
-	float out_min, float out_max)
+int	absolute_i(int value)
 {
-	return ((n - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+	if (value >= 0)
+		return (value);
+	return (-value);
 }
 
 float	absolutef(float value)

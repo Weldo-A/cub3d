@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/11 13:16:18 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:52:13 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ t_cubdata	*debug_data_init(void)
 	cubdata->map->map_str = malloc(sizeof(char) * (ft_strlen(MAP_DEBUG) + 1));
 	strcpy(cubdata->map->map_str, MAP_DEBUG);
 	cubdata->map->width = 14;
-	cubdata->map->height = 8;
+	cubdata->map->height = 58;
 	cubdata->floor_color = FLOOR_DEBUG;
 	cubdata->ceiling_color = CEILING_DEBUG;
 	cubdata->player = malloc(sizeof(t_player));
-	cubdata->player->x = 5.5f;
-	cubdata->player->y = 6.5f;
+	cubdata->player->x = 1.5f;
+	cubdata->player->y = 1.5f;
 	cubdata->player->angle = M_3PI_2;
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
 	cubdata->asset_list = NULL;

@@ -6,11 +6,28 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/10 16:58:09 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:47:25 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+static void	draw_stripe_background(t_cubdata *cub, int idx)
+{
+	int	i;
+
+	i = 0;
+	while (i < CAMERA_H / 2)
+	{
+		pixel_to_texture(cub->camera, idx, i, cub->ceiling_color);
+		i++;
+	}
+	while (i < CAMERA_H)
+	{
+		pixel_to_texture(cub->camera, idx, i, cub->floor_color);
+		i++;
+	}
+}
 
 static void	draw_stripe(t_cubdata *cub, int line_h, int idx, float offset)
 {
@@ -51,11 +68,13 @@ static void	draw_walls(t_cubdata *cub)
 	while (i < CAMERA_W)
 	{
 		if (cub->rays[i].ray_hit)
-		da = cub->player->angle - cub->rays[i].angle;
-		if (da < 0)
-			da += M_PI * 2;
-		else if (da > M_PI * 2)
-			da -= M_PI * 2;
+			da = cub->player->angle - cub->rays[i].angle;
+		else
+		{
+			draw_stripe_background(cub, i);
+			i++;
+			continue ;
+		}
 		if (cub->rays[i].h_dist < cub->rays[i].v_dist)
 			dist = cub->rays[i].h_dist;
 		else

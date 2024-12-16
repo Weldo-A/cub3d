@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 04:00:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/16 17:54:53 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:01:18 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	v_collision(t_cubdata *cub, int idx)
 	yo = cub->rays[idx].step_x * cub->rays[idx].slope;
 	while (1)
 	{
-		if (absolute_i((int)pos.x - (int)cub->player->x) > 100 \
-			|| absolute_i((int)pos.y - (int)cub->player->y) > 100 \
+		if (absolute_i((int)pos.x - (int)cub->player->x) > MAX_DEPTH \
+			|| absolute_i((int)pos.y - (int)cub->player->y) > MAX_DEPTH \
 			|| check_for_collision_v(cub, idx, &pos, check_for_doors))
 			break ;
 		pos.y += yo;
@@ -118,8 +118,8 @@ void	h_collision(t_cubdata *cub, int idx)
 	xo = -cub->rays[idx].step_y * cub->rays[idx].ninv_slope;
 	while (1)
 	{
-		if (absolute_i((int)pos.x - (int)cub->player->x) > 100 \
-			|| absolute_i((int)pos.y - (int)cub->player->y) > 100 \
+		if (absolute_i((int)pos.x - (int)cub->player->x) > MAX_DEPTH \
+			|| absolute_i((int)pos.y - (int)cub->player->y) > MAX_DEPTH \
 			|| check_for_collision_h(cub, idx, &pos, check_for_doors))
 			break ;
 		pos.x += xo;

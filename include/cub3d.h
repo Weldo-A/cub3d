@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/16 17:52:16 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:01:06 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define CAMERA_W 900
 # define CAMERA_H 900
 # define PROJPLANE_DIST 1.0f
+# define MAX_DEPTH 100
 
 # define WINDOW_W 900
 # define WINDOW_H 900

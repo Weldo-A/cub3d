@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 17:04:49 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:31:15 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	map_element_at_pos(t_map *map, float x, float y)
 	return (map->map_str[inty * map->width + intx]);
 }
 
-static bool	is_door_pos_walkable(t_cubdata *cub, char door_type, float x, float y)
+static bool	is_door_pos_walkable(t_cubdata *cub, char door_type, \
+	float x, float y)
 {
 	t_door	*door;
 	float	fract;

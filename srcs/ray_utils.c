@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 22:02:59 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 15:22:21 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:54:11 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 bool	ray_first_step_v(t_point *point, t_player *p, t_ray *ray)
 {
-	static int count = 0;
-	float	int_part;
-	bool	half_block;
+	static int	count = 0;
+	float		int_part;
+	bool		half_block;
 
 	if (modff(point->x, &int_part) < 0.5f)
 	{

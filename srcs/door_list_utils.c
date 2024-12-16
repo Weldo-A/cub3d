@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:38:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 17:01:40 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:53:48 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_door	*search_door(t_door *list, int x, int y)
 
 void	add_door_to_list(t_door **list, int x, int y, char type)
 {
-	t_door *new;
+	t_door	*new;
 
 	if (search_door(*list, x, y))
 		return ;

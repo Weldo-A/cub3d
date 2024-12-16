@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/11 16:01:58 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:52:16 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -625,18 +625,6 @@ int	absolute_i(int value);
  * @return float 
  */
 float	remapf(float n, float in_min, float in_max, float out_min, float out_max);
-
-/**
- * @brief remap an int from one range to an other
- * 
- * @param n 
- * @param in_min 
- * @param in_max 
- * @param out_min 
- * @param out_max 
- * @return float 
- */
-float	remap(int64_t n, int64_t in_min, int64_t in_max, int64_t out_min, int64_t out_max);
 
 /**
  * @brief Returns the angle of a ray. The index of the ray is mapped

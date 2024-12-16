@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 04:00:11 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/11 16:08:42 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:54:53 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	check_for_collision_v(t_cubdata *cub, int idx, t_point *p, \
 
 	if (!check_for_doors)
 	{
-		if (map_element_at_pos(cub->map, p->x + 0.01f * cub->rays[idx].step_x\
+		if (map_element_at_pos(cub->map, p->x + 0.01f * cub->rays[idx].step_x \
 			, p->y) == '1')
 		{
 			save_v_inter(&cub->rays[idx], p, cub->player);
@@ -91,11 +91,10 @@ void	v_collision(t_cubdata *cub, int idx)
 		return ;
 	check_for_doors = ray_first_step_v(&pos, cub->player, &cub->rays[idx]);
 	yo = cub->rays[idx].step_x * cub->rays[idx].slope;
-
 	while (1)
 	{
-		if (absolute_i((int)pos.x - (int)cub->player->x) > 30 \
-			|| absolute_i((int)pos.y - (int)cub->player->y) > 30 \
+		if (absolute_i((int)pos.x - (int)cub->player->x) > 100 \
+			|| absolute_i((int)pos.y - (int)cub->player->y) > 100 \
 			|| check_for_collision_v(cub, idx, &pos, check_for_doors))
 			break ;
 		pos.y += yo;
@@ -119,8 +118,8 @@ void	h_collision(t_cubdata *cub, int idx)
 	xo = -cub->rays[idx].step_y * cub->rays[idx].ninv_slope;
 	while (1)
 	{
-		if (absolute_i((int)pos.x - (int)cub->player->x) > 30 \
-			|| absolute_i((int)pos.y - (int)cub->player->y) > 30 \
+		if (absolute_i((int)pos.x - (int)cub->player->x) > 100 \
+			|| absolute_i((int)pos.y - (int)cub->player->y) > 100 \
 			|| check_for_collision_h(cub, idx, &pos, check_for_doors))
 			break ;
 		pos.x += xo;

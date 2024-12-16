@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:21:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/05 15:18:43 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:45:12 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	remove_inactive_doors(t_cubdata *cub)
 	{
 		next = door->next;
 		if (door->state <= 0)
+		{
 			if (door->x < (int)cub->player->x - 1 \
 				|| door->x > (int)cub->player->x + 1 \
 				|| door->y < (int)cub->player->y - 1 \
@@ -50,6 +51,7 @@ static void	remove_inactive_doors(t_cubdata *cub)
 			{
 				remove_door(&cub->active_doors, door);
 			}
+		}
 		door = next;
 	}
 }

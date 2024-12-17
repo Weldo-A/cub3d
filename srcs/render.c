@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 23:15:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/16 17:51:48 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:59:56 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	draw_stripe(t_cubdata *cub, int line_h, int idx, float offset)
 	int	line_start;
 	int	i;
 
+	static int	errors = 0;
+
 	line_start = CAMERA_H / 2 - line_h / 2;
 	x = (int)roundf((offset - 0.0f) * \
 		(cub->rays[idx].wall_tx->width - 1) / 1.0f);
@@ -47,7 +49,27 @@ static void	draw_stripe(t_cubdata *cub, int line_h, int idx, float offset)
 		else if (i < CAMERA_H / 2 + line_h / 2)
 		{
 			y = (i - line_start) * (cub->rays[idx].wall_tx->height - 1) \
-				/ (line_h - 1);	
+				/ (line_h - 1);
+			
+			if (x > (int)cub->rays[idx].wall_tx->width || y > (int)cub->rays[idx].wall_tx->height || x < 0 || y < 0)
+			{
+				errors++;
+				printf("\nERROR\t%d\n\n", errors);
+				printf("x:\t%d\n", x);
+				printf("width:\t%d\nheight:\t%d\n", cub->rays[idx].wall_tx->width, cub->rays[idx].wall_tx->height);
+				
+				t_asset *asset = cub->asset_list;
+				while (asset && asset->tx != cub->rays[idx].wall_tx)
+					asset = asset->next;
+				if (asset)
+					printf("asset name:\t%s\n", asset->name);
+				else
+					printf("not an asset ?????\n");
+				
+			}
+			if (errors > 5)
+				exit (1);
+			
 			pixel_to_texture(cub->camera, idx, i, \
 				get_color(cub->rays[idx].wall_tx, x, y));
 		}

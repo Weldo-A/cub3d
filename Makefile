@@ -6,11 +6,11 @@
 #    By: abernade <abernade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/12/18 16:08:28 by abernade         ###   ########.fr        #
+#    Updated: 2024/12/18 16:48:41 by abernade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := cub3d
+NAME := cub3D
 SRC_DIR := srcs
 OBJ_DIR := obj
 LIBFT_DIR := libft

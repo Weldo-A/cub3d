@@ -3,23 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abernade <abernade@student.42.fr>          +#+  +:+       +#+         #
+#    By: aduriez <aduriez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/12/17 14:36:18 by abernade         ###   ########.fr        #
+#    Updated: 2024/12/18 11:16:41 by aduriez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := cub3D
-
+NAME := cub3d
 SRC_DIR := srcs
-
 OBJ_DIR := obj
-
 LIBFT_DIR := libft
-
 LIBFT := $(LIBFT_DIR)/libft.a
-
 INCLUDE_DIR := include
 
 SRC_FILES := main.c \
@@ -36,26 +31,34 @@ SRC_FILES := main.c \
 			rays.c \
 			ray_collision.c \
 			ray_utils.c \
-			ray_utils2.c \
 			render.c \
 			texture_utils.c \
-			utils.c
+			utils.c \
+			parsing.c \
+			check_pars.c \
+			check_color.c \
+			check_ext_text.c \
+			check_wall.c \
+			insert_map.c \
+			a_enlever.c \
+			utils_wall.c \
+			utils_insert_maps.c \
+			error_parsing.c \
+			free_parsing.c \
+			insert_orient.c \
+			insert_orientation.c \
+			utils_pars.c
 
 SRC := $(SRC_FILES:%.c=$(SRC_DIR)/%.c)
-
-#OBJ = $(addsuffix .o,$(basename $(addprefix $(OBJ_DIR)/, $(notdir $(SRC_FILES)))))
 OBJ := $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 
 CC := cc
-
 CFLAGS := -Wall -Wextra -Werror -g
 
 LIBS := -ldl -lglfw -pthread -lm
 
 MLX_DIR := MLX42
-
 MLX := $(MLX_DIR)/build/libmlx42.a
-
 MLX_INCLUDE := $(MLX_DIR)/include/MLX42
 
 INCLUDE := -I/usr/include/X11 \

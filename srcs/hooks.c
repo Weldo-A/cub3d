@@ -45,7 +45,7 @@ static void	mouse_check(t_cubdata *cub)
 		cub->player->angle -= 2.0f * M_PI;
 }
 
-void	generic_hook(void	*cubdata)
+void	generic_hook(void *cubdata)
 {
 	update_door_list(cubdata);
 	input_check(cubdata);

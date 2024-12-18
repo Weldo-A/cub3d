@@ -35,7 +35,7 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static void	free_all(char **strs)
+static void	free_alls(char **strs)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ static void	fill_result(char **result, int size, char const *s, char c)
 		result[i] = next_str(s, c);
 		if (!result[i])
 		{
-			free_all(result);
+			free_alls(result);
 			result = NULL;
 			return ;
 		}

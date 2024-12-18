@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduriez <aduriez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:01:42 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/16 17:31:15 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:15:47 by aduriez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 char	map_element_at_pos(t_map *map, float x, float y)
 {
-	int	intx;
-	int	inty;
+	int		intx;
+	int		inty;
+	char	element;
 
 	intx = (int)x;
 	inty = (int)y;
-	if (intx < 0 || inty < 0 || x > map->width || y > map->height)
-		return (0);
-	return (map->map_str[inty * map->width + intx]);
+	if (intx < 0 || inty < 0 || (uint32_t)intx >= map->width
+		|| (uint32_t)inty >= map->height)
+		return ('1');
+	element = map->map_str[inty * map->width + intx];
+	if (element == 'S')
+		return ('0');
+	return (element);
 }
 
-static bool	is_door_pos_walkable(t_cubdata *cub, char door_type, \
-	float x, float y)
+static bool	is_door_pos_walkable(t_cubdata *cub, char door_type, float x,
+		float y)
 {
 	t_door	*door;
 	float	fract;
@@ -38,8 +43,7 @@ static bool	is_door_pos_walkable(t_cubdata *cub, char door_type, \
 		fract = modff(y, &discard);
 	else
 		fract = modff(x, &discard);
-	return (door->state == DOOR_OPEN_FRAMES \
-		|| fract > 0.5f + MIN_DIST_FROM_WALL \
+	return (door->state == DOOR_OPEN_FRAMES || fract > 0.5f + MIN_DIST_FROM_WALL
 		|| fract < 0.5f - MIN_DIST_FROM_WALL);
 }
 
@@ -78,8 +82,7 @@ bool	is_pos_walkable(t_cubdata *cub, float x, float y)
 	else
 		step_y = 0.0f;
 	(void)discard;
-	if (!is_pos_valid(cub, x + step_x, y) \
-		|| !is_pos_valid(cub, x, y + step_y) \
+	if (!is_pos_valid(cub, x + step_x, y) || !is_pos_valid(cub, x, y + step_y)
 		|| !is_pos_valid(cub, x + step_x, y + step_y))
 		return (false);
 	return (true);

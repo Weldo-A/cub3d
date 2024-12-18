@@ -44,9 +44,9 @@ static void	remove_inactive_doors(t_cubdata *cub)
 		next = door->next;
 		if (door->state <= 0)
 		{
-			if (door->x < (int)cub->player->x - 1 \
-				|| door->x > (int)cub->player->x + 1 \
-				|| door->y < (int)cub->player->y - 1 \
+			if (door->x < (int)cub->player->x - 1
+				|| door->x > (int)cub->player->x + 1
+				|| door->y < (int)cub->player->y - 1
 				|| door->y > (int)cub->player->y + 1)
 			{
 				remove_door(&cub->active_doors, door);
@@ -58,7 +58,7 @@ static void	remove_inactive_doors(t_cubdata *cub)
 
 static void	update_doors_state(t_cubdata *cub)
 {
-	t_door			*door;
+	t_door	*door;
 
 	door = cub->active_doors;
 	while (door)

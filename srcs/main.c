@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 
 	(void)ac;
 	(void)av;
-	cubdata = debug_data_init();
+	cubdata = debug_data_init(ac, av);
 	cubdata_mlx_init(cubdata);
 	if (mlx_image_to_window(cubdata->mlx, cubdata->main_img, 0, 0) == -1)
 		error_exit(MLX_ERR);

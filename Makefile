@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aduriez <aduriez@student.42.fr>            +#+  +:+       +#+         #
+#    By: abernade <abernade@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 17:14:48 by abernade          #+#    #+#              #
-#    Updated: 2024/12/18 11:16:41 by aduriez          ###   ########.fr        #
+#    Updated: 2024/12/18 16:08:28 by abernade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INCLUDE_DIR := include
 SRC_FILES := main.c \
 			asset_handles.c \
 			cubdata.c \
-			debug.c \
+			init.c \
 			door.c \
 			door_list_utils.c \
 			errors.c \
@@ -31,6 +31,7 @@ SRC_FILES := main.c \
 			rays.c \
 			ray_collision.c \
 			ray_utils.c \
+			ray_utils2.c \
 			render.c \
 			texture_utils.c \
 			utils.c \
@@ -73,6 +74,8 @@ $(CC) $(CFLAGS) $(INCLUDE) -O3 -c $< -o $@
 endef
 
 all: $(NAME)
+
+bonus: $(NAME)
 
 $(MLX):
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4

@@ -6,18 +6,16 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/10 15:44:17 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:40:45 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-t_cubdata	*debug_data_init(int ac, char **av)
+t_cubdata	*data_init(int ac, char **av)
 {
 	t_cubdata	*cubdata;
 
-	(void)ac;
-	(void)av;
 	cubdata = malloc(sizeof(t_cubdata));
 	cubdata->map = malloc(sizeof(t_map));
 	cubdata->player = malloc(sizeof(t_player));

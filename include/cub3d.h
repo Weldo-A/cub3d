@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduriez <aduriez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/18 11:14:44 by aduriez          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:11:19 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,10 +214,8 @@ typedef struct s_cubdata
 
 // ********** FUNCTION PROTOTYPES **********
 
-// Debug Functions
-t_cubdata			*debug_data_init(int ac, char **av);
-void				draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx,
-						int color);
+// Data Init
+t_cubdata			*data_init(int ac, char **av);
 
 // Base Functions
 void				cubdata_mlx_init(t_cubdata *cubdata);
@@ -240,6 +238,8 @@ bool				ray_first_step_v(t_point *point, t_player *p, t_ray *ray);
 bool				ray_first_step_h(t_point *point, t_player *p, t_ray *ray);
 void				v_collision(t_cubdata *cub, int idx);
 void				h_collision(t_cubdata *cub, int idx);
+void				update_ray_v(t_cubdata *cub, int idx);
+void				update_ray_h(t_cubdata *cub, int idx);
 
 // Door Functions
 void				update_door_list(t_cubdata *cub);

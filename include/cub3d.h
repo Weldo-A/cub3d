@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:19:44 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/18 16:11:19 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:41:21 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@
 # define MMAP_WIDTH 260
 # define MMAP_HEIGHT 260
 # define MMAP_X 0
-# define MMAP_Y (CAMERA_H - MMAP_HEIGHT)
+# define MMAP_Y 640
 # define MMAP_SQUARE_SIZE 30
-# define MMAP_PIXEL_STEP (float)(1 / (float)MMAP_SQUARE_SIZE)
+# define MMAP_PIXEL_STEP 0.0333333333333333f
 # define FOV M_PI_3
 
 // ********** COLORS **********
-# define MMAP_COLOR_1 (uint32_t)0x2E3B56FF
-# define MMAP_COLOR_0 (uint32_t)0xFFFFFFFF
-# define BLACK (uint32_t)0x000000FF
-# define WHITE (uint32_t)0xFFFFFFFF
+# define MMAP_COLOR_1 0x2E3B56FF
+# define MMAP_COLOR_0 0xFFFFFFFF
+# define BLACK 0x000000FF
+# define WHITE 0xFFFFFFFF
 # define GREEN 0x3DA600FF
 # define FLOOR_DEBUG 0x845207FF
 # define CEILING_DEBUG 0x2D2D2DFF
@@ -58,7 +58,7 @@
 // ********** PLAYER MOVEMENT **********
 # define ANGLE_INCREMENT 0.05f
 # define POS_INCREMENT 0.035f
-# define MOUSE_ANGLE_RATIO 0.0016f
+# define MOUSE_ANGLE_RATIO 0.0011f
 # define MIN_DIST_FROM_WALL 0.1f
 
 // ********** TEXTURE DEFINITIONS **********
@@ -82,20 +82,6 @@
 # define DOOR_OPEN_FRAMES 120
 # define DOOR_CHAR_X 'D'
 # define DOOR_CHAR_Y 'd'
-
-// ********** DEBUG MAP **********
-/*
-String equivalent to a simple valid map:
-11111111111111
-10010101000001
-10010100000001
-11010100000001
-10010101101001
-1000000000d001
-11100N00001001
-11111111111111
-*/
-# define MAP_DEBUG "1111111111111110010101000001100101000000011101D100000001100101011010011000000000d0011110000000100111111111111111"
 
 // ********** ERROR CODES **********
 typedef enum error_code
@@ -274,8 +260,6 @@ char				map_element_at_pos(t_map *map, float x, float y);
 int					ft_strcmp(const char *s1, const char *s2);
 bool				is_pos_walkable(t_cubdata *cub, float x, float y);
 float				absolutef(float value);
-float				remapf(float n, float in_min, float in_max, float out_min,
-						float out_max);
 float				map_angle(int idx, float projplane_width, float face_angle);
 
 // Parsing Functions

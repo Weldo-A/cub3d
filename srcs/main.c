@@ -6,7 +6,7 @@
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:36:03 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/18 15:40:57 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:29:31 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	main(int ac, char **av)
 {
 	t_cubdata	*cubdata;
 
-	(void)ac;
-	(void)av;
 	cubdata = data_init(ac, av);
 	cubdata_mlx_init(cubdata);
 	if (mlx_image_to_window(cubdata->mlx, cubdata->main_img, 0, 0) == -1)

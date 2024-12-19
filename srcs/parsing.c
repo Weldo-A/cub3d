@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduriez <aduriez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 11:44:24 by aduriez           #+#    #+#             */
-/*   Updated: 2024/12/18 10:46:58 by aduriez          ###   ########.fr       */
+/*   Updated: 2024/12/19 15:08:46 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	insert_data(t_cubdata **cubdata, t_insert_data *data)
 	setup_map_and_player(cubdata, data);
 	set_player_direction(data, cubdata);
 	load_all_assets(cubdata, data);
-	load_asset(&(*cubdata)->asset_list, "assets/Brick_Texture.png", DOOR_TX);
 	(*cubdata)->floor_color = str_rgb_to_hex(data->c);
 	(*cubdata)->ceiling_color = str_rgb_to_hex(data->f);
 	return (0);

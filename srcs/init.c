@@ -1,26 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.c                                            :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abernade <abernade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 04:20:57 by abernade          #+#    #+#             */
-/*   Updated: 2024/12/18 15:40:45 by abernade         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:54:33 by abernade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-<<<<<<< HEAD:srcs/init.c
-t_cubdata	*data_init(int ac, char **av)
-{
-	t_cubdata	*cubdata;
-
-	cubdata = malloc(sizeof(t_cubdata));
-	cubdata->map = malloc(sizeof(t_map));
-	cubdata->player = malloc(sizeof(t_player));
-=======
 static t_cubdata	*init_allocations(void)
 {
 	t_cubdata	*cubdata;
@@ -45,14 +36,13 @@ static t_cubdata	*init_allocations(void)
 	return (cubdata);
 }
 
-t_cubdata	*debug_data_init(int ac, char **av)
+t_cubdata	*data_init(int ac, char **av)
 {
 	t_cubdata	*cubdata;
 
 	cubdata = init_allocations();
 	if (!cubdata)
 		return (NULL);
->>>>>>> antoine:srcs/debug.c
 	cubdata->player->angle = M_3PI_2;
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
 	cubdata->asset_list = NULL;

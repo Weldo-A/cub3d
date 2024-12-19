@@ -12,7 +12,7 @@
 
 #include <cub3d.h>
 
-int	check_file_valid(int fd, char **av) // Check open file
+int	check_file_valid(int fd, char **av)
 {
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)

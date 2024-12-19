@@ -40,3 +40,24 @@ void	update_line(char **line, int fd, int *count)
 	*line = get_next_line(fd);
 	(*count)++;
 }
+
+int	init_data(t_insert_data **data)
+{
+	*data = malloc(sizeof(t_insert_data));
+	if (!*data)
+	{
+		ft_putstr_fd("Error\nMalloc failed\n", 2);
+		return (1);
+	}
+	(*data)->check = 0;
+	(*data)->max_line = 0;
+	(*data)->start_map = 999999999;
+	(*data)->no = NULL;
+	(*data)->ea = NULL;
+	(*data)->so = NULL;
+	(*data)->we = NULL;
+	(*data)->c = NULL;
+	(*data)->f = NULL;
+	(*data)->map = NULL;
+	return (0);
+}

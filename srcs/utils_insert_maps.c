@@ -54,6 +54,7 @@ int	init_data(t_insert_data **data)
 	(*data)->start_map = 999999999;
 	(*data)->no = NULL;
 	(*data)->ea = NULL;
+	(*data)->door = NULL;
 	(*data)->so = NULL;
 	(*data)->we = NULL;
 	(*data)->c = NULL;

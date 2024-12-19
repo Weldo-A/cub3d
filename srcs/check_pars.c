@@ -17,7 +17,6 @@ int	check_file_valid(int fd, char **av)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error\nCannot open file\n", 2);
 		return (1);
 	}
 	return (0);

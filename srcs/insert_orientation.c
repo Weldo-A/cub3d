@@ -14,8 +14,10 @@
 
 int	ft_handle_map_line(char *line, t_insert_data *data, int *count, int x)
 {
-	if (data->check != 6)
+	if (data->check != 7)
+	{
 		return (-1);
+	}
 	if (data->start_map > x)
 		data->start_map = x;
 	if (data->max_line < (int)ft_strlen_no_new_line(line))
@@ -42,6 +44,8 @@ int	ft_search_orientation(char *line, t_insert_data *data, int *count, int x)
 		ft_insert_so(&line[i], data);
 	else if (ft_strncmp(&line[i], "WE", 2) == 0)
 		ft_insert_we(line, data);
+	else if (ft_strncmp(&line[i], "DO", 2) == 0)
+		ft_insert_do(line, data);
 	else if (ft_strncmp(&line[i], "\n", 1) == 0)
 		return (0);
 	else if (ft_strncmp(&line[i], "1", 1) == 0 || ft_strncmp(&line[i], "0",
@@ -76,5 +80,34 @@ void	ft_insert_f(char *line, t_insert_data *data)
 	free(end);
 	if (!data->f)
 		return ;
+	data->check++;
+}
+
+void	ft_insert_do(char *line, t_insert_data *data)
+{
+	char	*end;
+	int		i;
+
+	i = 0;
+	if (!line || !data || data->door != NULL)
+	{
+		data->check = 9999;
+		return ;
+	}
+	end = ft_copy_end(line, 'O');
+	if (!(end))
+		return ;
+	i = dell_space(end, &i);
+	if (!end[i])
+	{
+		free(end);
+		return ;
+	}
+	data->door = ft_strdup_new_line(&end[i]);
+	free(end);
+	if (!data->door)
+	{
+		return ;
+	}
 	data->check++;
 }

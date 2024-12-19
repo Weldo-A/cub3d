@@ -44,6 +44,7 @@ void	free_insert_data(t_insert_data *data, int i)
 	ft_free((void *)&data->no);
 	ft_free((void *)&data->ea);
 	ft_free((void *)&data->so);
+	ft_free((void *)&data->door);
 	ft_free((void *)&data->we);
 	ft_free((void *)&data->c);
 	ft_free((void *)&data->f);

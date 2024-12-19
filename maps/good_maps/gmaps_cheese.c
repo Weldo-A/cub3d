@@ -2,6 +2,7 @@ NO assets/eagle.png
 SO assets/eagle.png
 WE assets/eagle.png
 EA assets/eagle.png
+DO assets/eagle.png 
 
 F 164,169,20
 C 153,204,255

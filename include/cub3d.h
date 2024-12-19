@@ -167,6 +167,7 @@ typedef struct s_insert_data
 	char			*ea;
 	char			*so;
 	char			*we;
+	char 			*door;
 	int				nbr_line;
 	int				max_line;
 	int				max_struct;
@@ -307,6 +308,7 @@ int					check_extension(char *file, char *ext);
 int					insert_data(t_cubdata **cubdata, t_insert_data *data);
 int					init_data(t_insert_data **data);
 int					insert_len_data(char *filename, t_insert_data *data);
+void	ft_insert_do(char *line, t_insert_data *data);
 
 
 

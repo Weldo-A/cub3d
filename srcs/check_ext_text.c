@@ -62,11 +62,12 @@ int	check_textures(t_insert_data *data)
 		return (0);
 	trim_end_spaces(data->no);
 	trim_end_spaces(data->so);
+	trim_end_spaces(data->door);
 	trim_end_spaces(data->we);
 	trim_end_spaces(data->ea);
-	if (!check_extension(data->no, ".png") || !check_extension(data->so, ".png")
-		|| !check_extension(data->we, ".png") || !check_extension(data->ea,
-			".png"))
+	if (!check_extension(data->no, ".png") || !check_extension(data->no, ".png")
+		|| !check_extension(data->so, ".png") || !check_extension(data->we,
+			".png") || !check_extension(data->ea, ".png"))
 	{
 		return (0);
 	}

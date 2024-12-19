@@ -32,7 +32,7 @@ static void	load_all_assets(t_cubdata **cubdata, t_insert_data *data)
 	load_asset(&(*cubdata)->asset_list, data->so, SOUTH_TX);
 	load_asset(&(*cubdata)->asset_list, data->we, WEST_TX);
 	load_asset(&(*cubdata)->asset_list, data->ea, EAST_TX);
-	load_asset(&(*cubdata)->asset_list, "assets/Brick_Texture.png", DOOR_TX);
+	load_asset(&(*cubdata)->asset_list, data->door, DOOR_TX);
 }
 
 static void	setup_map_and_player(t_cubdata **cubdata, t_insert_data *data)
@@ -56,12 +56,6 @@ int	insert_data(t_cubdata **cubdata, t_insert_data *data)
 	int	i;
 
 	i = 0;
-	if (!check_file("assets/Brick_Texture.png")
-		|| !check_extension("assets/Brick_Texture.png", ".png"))
-	{
-		youhandle_errors(10, data);
-		return (1);
-	}
 	(*cubdata)->map->map_str = malloc(sizeof(char) * (data->max_struct + 2));
 	if (*cubdata == NULL)
 	{
@@ -96,7 +90,7 @@ int	start_parsing(int ac, char **av, t_cubdata **cubdata)
 		return (youhandle_errors(4, data));
 	if (check_color(data) == 1)
 		return (youhandle_errors(5, data));
-	if (data->check != 6)
+	if (data->check != 7)
 		return (youhandle_errors(7, data));
 	if (check_textures(data) == 0)
 		return (youhandle_errors(8, data));

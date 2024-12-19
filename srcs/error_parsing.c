@@ -16,25 +16,25 @@ int	youhandle_errors(int error_code, t_insert_data *data)
 {
 	free_insert_data(data, error_code);
 	if (error_code == 1)
-		ft_putstr_fd("1Error\nNot correct arguments\n", 2);
+		ft_putstr_fd("Error\nNot correct arguments\n", 2);
 	else if (error_code == 2)
-		ft_putstr_fd("2Error\nFile not valid\n", 2);
+		ft_putstr_fd("Error\nFile not valid\n", 2);
 	else if (error_code == 3)
-		ft_putstr_fd("3Error\nCalculate size file failed\n", 2);
+		ft_putstr_fd("Error\nCalculate size file failed\n", 2);
 	else if (error_code == 4)
-		ft_putstr_fd("4Error\nMap not valid\n", 2);
+		ft_putstr_fd("Error\nMap not valid\n", 2);
 	else if (error_code == 5)
-		ft_putstr_fd("5Error\nColors not valid\n", 2);
+		ft_putstr_fd("Error\nColors not valid\n", 2);
 	else if (error_code == 6)
-		ft_putstr_fd("6Error\nTexture not valid\n", 2);
+		ft_putstr_fd("Error\nTexture not valid\n", 2);
 	else if (error_code == 7)
-		ft_putstr_fd("7Error\nNot good organisation\n", 2);
+		ft_putstr_fd("Error\nNot good organisation\n", 2);
 	else if (error_code == 8)
-		ft_putstr_fd("8Error\nTextures Not good\n", 2);
+		ft_putstr_fd("Error\nTextures Not good\n", 2);
 	else if (error_code == 9)
-		ft_putstr_fd("9Error\nMemory allocation failed\n", 2);
+		ft_putstr_fd("Error\nMemory allocation failed\n", 2);
 	else if (error_code == 10)
-		ft_putstr_fd("10Error\nTextures door Not good\n", 2);
+		ft_putstr_fd("Error\nTextures door Not good\n", 2);
 	return (1);
 }
 

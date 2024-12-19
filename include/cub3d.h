@@ -286,7 +286,7 @@ void				print_mini_map_data(t_insert_data *data);
 void				free_insert_data(t_insert_data *data, int i);
 int					absolute_i(int value);
 unsigned int		str_rgb_to_hex(const char *rgb_str);
-int					handle_errors(int error_code, t_insert_data *data);
+int					youhandle_errors(int error_code, t_insert_data *data);
 int					check_textures(t_insert_data *data);
 int					check_color(t_insert_data *data);
 int					check_remaining_chars(char *str, int idx);
@@ -302,5 +302,13 @@ void				cleanup_resources(int fd, char *line);
 void				update_line(char **line, int fd, int *count);
 void				init_vars(int *x, int *count, char **line);
 int					init_file(char *filename, int *fd);
+int					check_file(char *filename);
+int					check_extension(char *file, char *ext);
+int					insert_data(t_cubdata **cubdata, t_insert_data *data);
+int					init_data(t_insert_data **data);
+int					insert_len_data(char *filename, t_insert_data *data);
+
+
+
 
 #endif

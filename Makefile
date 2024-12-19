@@ -41,7 +41,6 @@ SRC_FILES := main.c \
 			check_ext_text.c \
 			check_wall.c \
 			insert_map.c \
-			a_enlever.c \
 			utils_wall.c \
 			utils_insert_maps.c \
 			error_parsing.c \

@@ -37,8 +37,8 @@ static void	draw_stripe(t_cubdata *cub, int line_h, int idx, float offset)
 	int	i;
 
 	line_start = CAMERA_H / 2 - line_h / 2;
-	x = (int)roundf((offset - 0.0f) * \
-		(cub->rays[idx].wall_tx->width - 1) / 1.0f);
+	x = (int)roundf((offset - 0.0f) * (cub->rays[idx].wall_tx->width - 1)
+			/ 1.0f);
 	i = 0;
 	while (i < CAMERA_H)
 	{
@@ -46,9 +46,9 @@ static void	draw_stripe(t_cubdata *cub, int line_h, int idx, float offset)
 			pixel_to_texture(cub->camera, idx, i, cub->ceiling_color);
 		else if (i < CAMERA_H / 2 + line_h / 2)
 		{
-			y = (i - line_start) * (cub->rays[idx].wall_tx->height - 1) \
-				/ (line_h - 1);	
-			pixel_to_texture(cub->camera, idx, i, \
+			y = (i - line_start) * (cub->rays[idx].wall_tx->height - 1)
+				/ (line_h - 1);
+			pixel_to_texture(cub->camera, idx, i,
 				get_color(cub->rays[idx].wall_tx, x, y));
 		}
 		else

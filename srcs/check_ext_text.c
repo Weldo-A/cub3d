@@ -12,7 +12,7 @@
 
 #include <cub3d.h>
 
-static int	check_file(char *path)
+int	check_file(char *path)
 {
 	int	fd;
 	int	dir_fd;
@@ -59,10 +59,7 @@ void	trim_end_spaces(char *str)
 int	check_textures(t_insert_data *data)
 {
 	if (!data->no || !data->so || !data->we || !data->ea)
-	{
-		printf("Error\nMissing texture direction\n");
 		return (0);
-	}
 	trim_end_spaces(data->no);
 	trim_end_spaces(data->so);
 	trim_end_spaces(data->we);

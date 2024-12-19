@@ -12,34 +12,6 @@
 
 #include <cub3d.h>
 
-int	insert_len_data(char *filename, t_insert_data *data)
-{
-	char	*line;
-	int		count;
-	int		fd;
-	int		x;
-
-	count = 0;
-	line = NULL;
-	x = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		if (ft_search_orientation(line, data, &count, x) == -1)
-		{
-			cleanup_resources(fd, line);
-			return (-1);
-		}
-		update_line(&line, fd, &x);
-	}
-	get_next_line(-1);
-	close(fd);
-	return (count);
-}
-
 void	set_player_direction(t_insert_data *data, t_cubdata **cubdata)
 {
 	if (!data || !cubdata || !(*cubdata)->player)
@@ -54,13 +26,20 @@ void	set_player_direction(t_insert_data *data, t_cubdata **cubdata)
 		(*cubdata)->player->angle = M_PI;
 }
 
-void	insert_data(t_cubdata **cubdata, t_insert_data *data)
+static void	load_all_assets(t_cubdata **cubdata, t_insert_data *data)
+{
+	load_asset(&(*cubdata)->asset_list, data->no, NORTH_TX);
+	load_asset(&(*cubdata)->asset_list, data->so, SOUTH_TX);
+	load_asset(&(*cubdata)->asset_list, data->we, WEST_TX);
+	load_asset(&(*cubdata)->asset_list, data->ea, EAST_TX);
+	load_asset(&(*cubdata)->asset_list, "assets/Brick_Texture.png", DOOR_TX);
+}
+
+static void	setup_map_and_player(t_cubdata **cubdata, t_insert_data *data)
 {
 	int	i;
 
 	i = 0;
-	(*cubdata)->map->map_str = malloc(sizeof(char) * (data->max_struct + 2));
-	(*cubdata)->map->map_str[data->max_struct + 1] = '\0';
 	while (i < data->max_line * data->nbr_line)
 	{
 		(*cubdata)->map->map_str[i] = data->map[i].str;
@@ -70,34 +49,32 @@ void	insert_data(t_cubdata **cubdata, t_insert_data *data)
 	(*cubdata)->player->y = (float)data->player_place.x + 0.5f;
 	(*cubdata)->map->width = data->max_line;
 	(*cubdata)->map->height = data->nbr_line;
+}
+
+int	insert_data(t_cubdata **cubdata, t_insert_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (!check_file("assets/Brick_Texture.png")
+		|| !check_extension("assets/Brick_Texture.png", ".png"))
+	{
+		youhandle_errors(10, data);
+		return (1);
+	}
+	(*cubdata)->map->map_str = malloc(sizeof(char) * (data->max_struct + 2));
+	if (*cubdata == NULL)
+	{
+		youhandle_errors(9, data);
+		return (1);
+	}
+	(*cubdata)->map->map_str[data->max_struct + 1] = '\0';
+	setup_map_and_player(cubdata, data);
 	set_player_direction(data, cubdata);
-	load_asset(&(*cubdata)->asset_list, data->no, NORTH_TX);
-	load_asset(&(*cubdata)->asset_list, data->so, SOUTH_TX);
-	load_asset(&(*cubdata)->asset_list, data->we, WEST_TX);
-	load_asset(&(*cubdata)->asset_list, data->ea, EAST_TX);
+	load_all_assets(cubdata, data);
 	load_asset(&(*cubdata)->asset_list, "assets/Brick_Texture.png", DOOR_TX);
 	(*cubdata)->floor_color = str_rgb_to_hex(data->c);
 	(*cubdata)->ceiling_color = str_rgb_to_hex(data->f);
-}
-
-static int	init_data(t_insert_data **data)
-{
-	*data = malloc(sizeof(t_insert_data));
-	if (!*data)
-	{
-		ft_putstr_fd("Error\nMalloc failed\n", 2);
-		return (1);
-	}
-	(*data)->check = 0;
-	(*data)->max_line = 0;
-	(*data)->start_map = 999999999;
-	(*data)->no = NULL;
-	(*data)->ea = NULL;
-	(*data)->so = NULL;
-	(*data)->we = NULL;
-	(*data)->c = NULL;
-	(*data)->f = NULL;
-	(*data)->map = NULL;
 	return (0);
 }
 
@@ -110,22 +87,22 @@ int	start_parsing(int ac, char **av, t_cubdata **cubdata)
 	if (init_data(&data))
 		return (1);
 	if (ac != 2)
-		return (handle_errors(1, data));
+		return (youhandle_errors(1, data));
 	if (check_file_valid(0, av) == 1)
-		return (handle_errors(2, data));
+		return (youhandle_errors(2, data));
 	data->nbr_line = insert_len_data(av[1], data);
 	if (data->nbr_line == -1)
-		return (handle_errors(3, data));
+		return (youhandle_errors(3, data));
 	if (start_insert_map(data, av[1]) == 1)
-		return (handle_errors(4, data));
+		return (youhandle_errors(4, data));
 	if (check_color(data) == 1)
-		return (handle_errors(5, data));
+		return (youhandle_errors(5, data));
 	if (data->check != 6)
-		return (handle_errors(7, data));
+		return (youhandle_errors(7, data));
 	if (check_textures(data) == 0)
-		return (handle_errors(8, data));
-	insert_data(cubdata, data);
-	print_mini_map_data(data);
+		return (youhandle_errors(8, data));
+	if (insert_data(cubdata, data) == 1)
+		return (1);
 	free_insert_data(data, 0);
 	return (0);
 }

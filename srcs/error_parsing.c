@@ -12,7 +12,7 @@
 
 #include <cub3d.h>
 
-int	handle_errors(int error_code, t_insert_data *data)
+int	youhandle_errors(int error_code, t_insert_data *data)
 {
 	free_insert_data(data, error_code);
 	if (error_code == 1)
@@ -31,6 +31,10 @@ int	handle_errors(int error_code, t_insert_data *data)
 		ft_putstr_fd("7Error\nNot good organisation\n", 2);
 	else if (error_code == 8)
 		ft_putstr_fd("8Error\nTextures Not good\n", 2);
+	else if (error_code == 9)
+		ft_putstr_fd("9Error\nMemory allocation failed\n", 2);
+	else if (error_code == 10)
+		ft_putstr_fd("10Error\nTextures door Not good\n", 2);
 	return (1);
 }
 

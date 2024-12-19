@@ -14,7 +14,8 @@
 
 int	ft_check_char(char c, t_insert_data *data, int *i)
 {
-	if (c == '1' || c == '0' || c == 'S' || c == 'D' || c == 'd')
+	if (c == '1' || c == '0' || c == 'S' || c == 'D' || c == 'd' || c == 'N'
+		|| c == 'W' || c == 'E')
 	{
 		data->map[*i].str = c;
 		return (0);
@@ -108,6 +109,10 @@ int	start_insert_map(t_insert_data *data, char *arg)
 	i = 0;
 	(*data).map = malloc(sizeof(t_mini_map_data) * ((*data).nbr_line
 				* (*data).max_line));
+	if ((*data).map == NULL)
+	{
+		return (1);
+	}
 	if (!(*data).map)
 		return (1);
 	if (insert_map(arg, data, &i) == 1)

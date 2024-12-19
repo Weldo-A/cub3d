@@ -16,8 +16,11 @@ int	main(int ac, char **av)
 {
 	t_cubdata	*cubdata;
 
+<<<<<<< Updated upstream
 	(void)ac;
 	(void)av;
+=======
+>>>>>>> Stashed changes
 	cubdata = debug_data_init(ac, av);
 	cubdata_mlx_init(cubdata);
 	if (mlx_image_to_window(cubdata->mlx, cubdata->main_img, 0, 0) == -1)

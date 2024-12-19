@@ -47,6 +47,7 @@ t_cubdata	*debug_data_init(int ac, char **av)
 	cubdata->mmap_sqr_size = MMAP_SQUARE_SIZE;
 	cubdata->asset_list = NULL;
 	ft_bzero(cubdata->rays, sizeof(t_ray) * CAMERA_W);
+	printf("la");
 	if (start_parsing(ac, av, &cubdata) == 1)
 	{
 		free(cubdata->player);
@@ -54,5 +55,6 @@ t_cubdata	*debug_data_init(int ac, char **av)
 		free(cubdata);
 		exit(1);
 	}
+	printf("das");
 	return (cubdata);
 }

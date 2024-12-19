@@ -214,10 +214,15 @@ typedef struct s_cubdata
 
 // ********** FUNCTION PROTOTYPES **********
 
+<<<<<<< Updated upstream
 // Debug Functions
 t_cubdata			*debug_data_init(int ac, char **av);
 void				draw_line(int x0, int y0, int x1, int y1, mlx_texture_t *tx,
 						int color);
+=======
+// Data Init
+t_cubdata			*debug_data_init(int ac, char **av);
+>>>>>>> Stashed changes
 
 // Base Functions
 void				cubdata_mlx_init(t_cubdata *cubdata);
